@@ -1,0 +1,18 @@
+<div ng-controller="PropertyCtrl">
+    <div ng-init="init()">
+
+        <h1>Menu</h1>
+
+        <div class="input-group">
+            <span class="input-group-addon">Youtube video ID</span>
+            <input type="text" class="form-control" ng-model="property.youtubeVideoId">
+        </div>
+        <br>
+
+        <div style="margin-top: 20px;">
+            <button type="button" class="btn btn-success" ng-click="save()">
+                <span class="glyphicon glyphicon-ok">Save</span>
+            </button>
+        </div>
+    </div>
+</div>

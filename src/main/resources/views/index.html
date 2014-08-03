@@ -1,0 +1,32 @@
+{% extends "default.html" %}
+
+{% block content %}
+<h1>Articles</h1>
+
+<section id="demo" style="position: relative">
+        {% for a in articles %}
+        <article class="white-panel">
+            <a href="/article/{{a.urlTitle}}">
+                <h1>{{ a.title }}</h1>
+                <img style="width: 240px;" src="{{a.mainImage}}">
+                <br>
+                {{ a.smallText }}
+            </a>
+        </article>
+        {% endfor %}
+
+</section>
+
+<script src="/js/vendor/pinterest_grid.js"></script>
+<script>
+    $(function() {
+        $('#demo').pinterest_grid({
+            no_columns: 4,
+            padding_x: 10,
+            padding_y: 10,
+            margin_bottom: 50,
+            single_column_breakpoint: 700
+        });
+    });
+</script>
+{% endblock %}

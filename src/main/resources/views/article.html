@@ -1,0 +1,22 @@
+{% extends "default.html" %}
+
+{% block content %}
+<h1>{{article.title}}</h1>
+
+{{article.bodyHTML}}
+
+ <script>
+     $(function() {
+        $(".content img").wrap(function() {
+            return '<div class="article-image" style="height: '+$(this).height()+'"><div class="article-image-wrapper">'+$( this ).text()+'</div></div>'
+        });
+
+         $(".content img").load(function() {
+            $(this).parent().parent().css("height", $(this).height()+80);
+         });
+
+         $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
+     });
+ </script>
+
+{% endblock %}

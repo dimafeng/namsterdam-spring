@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="admin">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-resource.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.legacy.min.js"></script>
+    <script src="/js/admin.js"></script>
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">New Amsterdam</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ui class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#/">Menu</a>
+                </li>
+                <li>
+                    <a href="#/articles">Articles</a>
+                </li>
+                <li>
+                    <a href="#/users">Users</a>
+                </li>
+                <li>
+                    <a href="#/property">Property</a>
+                </li>
+            </ui>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div ng-view style="padding-top: 60px;"></div>
+</div>
+</body>
+</html>
