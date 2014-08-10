@@ -11,218 +11,13 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 18px;
-        }
-
-        .nav li {
-            margin-left: 10px;
-            margin-right: 30px;
-            font-weight: bold;
-        }
-
-        .navbar-default .navbar-nav > .active > a {
-            background-color: #fff;
-            background-image: none;
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            border-bottom: 2px solid #1abc9c;
-        }
-
-        .big-image {
-            background-image: url('/images/main-bg.jpg');
-            min-height: 600px;
-            height: 600px;
-            margin-top: 130px;
-            box-shadow: 0 5px 5px #aaa;
-        }
-
-        .big-image h1 {
-            color: #fff;
-            font-size: 38px;
-            padding-top: 8px;
-        }
-
-        .big-image .short-text {
-            color: #fff;
-        }
-
-        .big-image .container {
-            position: relative;
-            top: 490px;
-        }
-
-        .navbar {
-            margin-bottom: 0px;
-        }
-
-        .content {
-            line-height: 35px;
-            font-size: 16px;
-            padding-top: 40px;
-        }
-
-        .content p {
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            min-height: 400px;
-            height: 300px;
-            background-color: #95a5a6;
-        }
-
-        .bottom-image {
-            position: relative;
-            right: 100px;
-            float: right;
-            top: -210px;
-        }
-
-        footer {
-            margin-top: 150px;
-        }
-
-        .footer-copy {
-            min-height: 70px;
-            background-color: #2c3e50;
-        }
-
-        .footer-links {
-            color: #fff;
-        }
-
-        time.icon {
-            font-size: 1em; /* change icon size */
-            display: block;
-            position: relative;
-            width: 80px;
-            height: 80px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
-            overflow: hidden;
-        }
-
-        time.icon * {
-            display: block;
-            width: 100%;
-            font-size: 12px;
-            font-weight: bold;
-            font-style: normal;
-            text-align: center;
-        }
-
-        time.icon strong {
-            position: absolute;
-            top: 0;
-            color: #fff;
-            background-color: #2c3e50;
-            border-bottom: 1px dashed #95a5a6;
-            box-shadow: 0 2px 0 #2c3e50;
-        }
-
-        time.icon em {
-            position: absolute;
-            bottom: 0.3em;
-            color: #2c3e50;
-        }
-
-        time.icon span {
-            font-size: 28px;
-            padding-top: 40px;
-            color: #2f2f2f;
-        }
-
-        .footer-menu {
-            padding-top: 50px;
-        }
-
-        .footer-menu a {
-            color: #fff;
-        }
-
-        #disqus_thread {
-            margin-top: 40px;
-        }
-
-        .white-panel {
-            position: absolute;
-            background: white;
-            box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
-            padding: 10px;
-        }
-        .white-panel h1 {
-            font-size: 20px;
-        }
-        .white-panel h1 a {
-            color: #A92733;
-        }
-        .white-panel a:hover {
-            text-decoration: none;
-        }
-        .white-panel:hover {
-            box-shadow: 1px 1px 10px rgba(0,0,0,0.5);
-            margin-top: -5px;
-            -webkit-transition: all 0.3s ease-in-out;
-            -moz-transition: all 0.3s ease-in-out;
-            -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .article-image-wrapper {
-            position: absolute;
-            left: 0;
-            right: 0;
-            background: #F1F0CB;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .article-map-wrapper {
-            position: absolute;
-            left: 0;
-            right: 0;
-        }
-
-        .article-map {
-            margin-top: 20px;
-            height: 500px;
-        }
-    </style>
+    <link href='http://fonts.googleapis.com/css?family=Marck+Script&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="/css/style.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
 <header>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/"><img src="/images/logo.png"/></a>
-            </div>
-            <div class="navbar-collapse collapse" style="margin-top: 60px;">
-                <ul class="nav navbar-nav navbar-right">
-                    {% for m in menus %}
-                    {% if m.url == selectedMenu %}
-                    <li class="active">
-                        {% else %}
-                    <li>
-                        {% endif %}
-
-                        {% if m.link %}
-                        <a href="{{m.url}}">{{m.name}}</a>
-                        {% else %}
-                        <a href="/s/{{m.url}}">{{m.name}}</a>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </div>
+    {% block header %} {% endblock %}
 </header>
-<div style="margin-top: 168px;"></div>
 
 <div class="main-container">
     <article class="container">
@@ -231,6 +26,9 @@
         </div>
     </article>
 </div>
+<section id="comments" style="background: #EEEEEE;margin-top: 150px;">
+    {% block comments %}{% endblock %}
+</section>
 <footer>
     <div class="bottom-image">
         <img src="/images/bottom.png">
@@ -279,11 +77,11 @@
                 <div class="col-md-4">
                     <div>Мы в социальных сетях:</div>
                     <div>
-                        <img src="/images/icon_vk.png"/>
-                        <img src="/images/icon_ok.png"/>
-                        <img src="/images/icon_tw.png"/>
-                        <img src="/images/icon_inst.png"/>
-                        <img src="/images/icon_yt.png"/>
+                        <a href="http://vk.com/n.amsterdam" target="_blank"><img src="/images/icon_vk.png"/></a>
+                        <a href="http://odnoklassniki.ru/group/52234122363065" target="_blank"><img src="/images/icon_ok.png"/></a>
+                        <a href="https://twitter.com/NAmsterdamvlog" target="_blank"><img src="/images/icon_tw.png"/></a>
+                        <a href="http://instagram.com/n.amsterdam" target="_blank"><img src="/images/icon_inst.png"/></a>
+                        <a href="https://www.youtube.com/user/NAmsterdamvlog" target="_blank"><img src="/images/icon_yt.png"/></a>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -297,17 +95,5 @@
         </div>
     </div>
 </footer>
-<script>
-    $(function () {
-        $(window).scroll(function (e) {
-            var scrollPosition = $(window).scrollTop();
-            if (scrollPosition > 200) {
-                $('.navbar').slideUp();
-            } else {
-                $('.navbar').slideDown();
-            }
-        });
-    });
-</script>
 </body>
 </html>

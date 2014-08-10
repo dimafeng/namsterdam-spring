@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document
 public class Article {
@@ -23,6 +24,7 @@ public class Article {
     private String urlTitle;
     private String mainImage;
     private String userId;
+    private List<String> categories;
 
     public String getId() {
         return id;
@@ -118,5 +120,13 @@ public class Article {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

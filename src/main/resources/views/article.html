@@ -1,10 +1,24 @@
-{% extends "default.html" %}
+{% extends "default-with-menu.html" %}
 
 {% block content %}
 <h1>{{article.title}}</h1>
 
 {{article.bodyHTML}}
 
+<script>
+     $(function() {
+        $(".content img").wrap(function() {
+            return '<div class="article-image"><div class="article-image-wrapper">'+$( this ).text()+'</div></div>'
+        });
+
+         $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
+     });
+ </script>
+
+{% endblock %}
+
+{% block comments %}
+<div class="container" style="padding-bottom: 150px;">
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -19,20 +33,5 @@
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-<script>
-     $(function() {
-        $(".content img").wrap(function() {
-            return '<div class="article-image" style="height: '+$(this).height()+'"><div class="article-image-wrapper">'+$( this ).text()+'</div></div>'
-        });
-
-         $(".content img").load(function() {
-            $(this).parent().parent().css("height", $(this).height()+80);
-         });
-
-         $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
-     });
- </script>
-
+</div>
 {% endblock %}
