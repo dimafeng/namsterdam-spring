@@ -51,6 +51,17 @@
 
                     <textarea style="width:100%; height: 600px" ng-model="selectedArticle.body"></textarea>
 
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Categories</span>
+                        <input type="text" class="form-control" ng-model="categories">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Tags</span>
+                        <input type="text" class="form-control" ng-model="tags">
+                    </div>
+                    <br>
                     <div style="margin-top: 20px;">
                         <button type="button" class="btn btn-success" ng-click="save()">
                             <span class="glyphicon glyphicon-ok">Save</span>

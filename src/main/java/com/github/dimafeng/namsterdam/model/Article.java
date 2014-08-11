@@ -24,7 +24,14 @@ public class Article {
     private String urlTitle;
     private String mainImage;
     private String userId;
+
+    @Indexed
     private List<String> categories;
+
+    @Indexed
+    private List<String> tags;
+
+    transient User user;
 
     public String getId() {
         return id;
@@ -128,5 +135,21 @@ public class Article {
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

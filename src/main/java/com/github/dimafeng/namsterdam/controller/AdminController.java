@@ -173,7 +173,11 @@ public class AdminController {
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseBody
     public User saveUpdateUser(@RequestBody User user) throws Exception {
-        user.setPassword(userService.encode(user.getPassword()));
+        if (user.getId() != null && !user.getId().isEmpty() && (user.getPassword() == null || user.getPassword().isEmpty())) {
+            user.setPassword(userRepository.findOne(user.getId()).getPassword());
+        } else {
+            user.setPassword(userService.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 

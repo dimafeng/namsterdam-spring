@@ -2,6 +2,7 @@ package com.github.dimafeng.namsterdam.controller;
 
 import com.github.dimafeng.namsterdam.dao.ArticleRepository;
 import com.github.dimafeng.namsterdam.dao.MenuRepository;
+import com.github.dimafeng.namsterdam.dao.UserRepository;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class IndexController {
     @Autowired
     private MenuRepository menuRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping("/")
     @MenuConsumer
     public String showIndex(Model model) {
@@ -33,9 +37,20 @@ public class IndexController {
         Pageable pageSpecification = new PageRequest(0, 10);
 
         Page<Article> articlePage = articleRepository.findAll(pageSpecification);
+
+        for (Article article : articlePage.getContent()) {
+            fillArticle(article);
+        }
+
         model.addAttribute("articles", articlePage.getContent());
 
         return "index";
+    }
+
+    private void fillArticle(Article article) {
+        if (article.getUserId() != null) {
+            article.setUser(userRepository.findOne(article.getUserId()));
+        }
     }
 
     @RequestMapping("/article/{articleName}")
@@ -43,9 +58,26 @@ public class IndexController {
     public String showArticle(@PathVariable("articleName") String articleName, Model model) {
 
         Article articlePage = articleRepository.findByUrlTitle(articleName);
+        fillArticle(articlePage);
         model.addAttribute("article", articlePage);
 
         return "article";
+    }
+
+    @RequestMapping("/category/{categoryName}")
+    @MenuConsumer
+    public String category(@PathVariable("categoryName") String categoryName, Model model) {
+        Pageable pageSpecification = new PageRequest(0, 10);
+
+        Page<Article> articlePage = articleRepository.findByCategory(categoryName, pageSpecification);
+
+        for (Article article : articlePage.getContent()) {
+            fillArticle(article);
+        }
+
+        model.addAttribute("articles", articlePage.getContent());
+
+        return "index";
     }
 
     @RequestMapping("/s/{pageName}")
@@ -54,7 +86,7 @@ public class IndexController {
 
         Menu menu = menuRepository.findByUrl(pageName);
 
-        if(menu.isLink()) {
+        if (menu.isLink()) {
             throw new IllegalStateException();
         }
 

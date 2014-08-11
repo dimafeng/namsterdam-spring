@@ -57,7 +57,7 @@ angular.module('admin', ['ngRoute', 'ngResource'])
 
         $scope.save = function () {
             $scope.selectedItem.$save().then(function (res) {
-               loadMenuItems();
+                loadMenuItems();
             });
         };
 
@@ -70,7 +70,16 @@ angular.module('admin', ['ngRoute', 'ngResource'])
         var Article = $resource('/admin/articles/:id', {id: '@id'});
 
         $scope.articles = [];
-        $scope.selectedArticle;
+        $scope.selectedArticle = null;
+        $scope.categories;
+        $scope.tags;
+
+        $scope.$watch('selectedArticle', function (selectedArticle) {
+            if (selectedArticle != null) {
+                $scope.categories = selectedArticle.categories == null? '' : selectedArticle.categories.join(',');
+                $scope.tags = selectedArticle.tags == null? '' : selectedArticle.tags.join(',');
+            }
+        });
 
         $scope.init = function () {
             Article.query(function (articles) {
@@ -94,6 +103,8 @@ angular.module('admin', ['ngRoute', 'ngResource'])
         };
 
         $scope.save = function () {
+            $scope.selectedArticle.categories = $scope.categories.split(',');
+            $scope.selectedArticle.tags = $scope.tags.split(',');
             $scope.selectedArticle.$save().then(function (res) {
                 $scope.init();
             });
@@ -109,13 +120,13 @@ angular.module('admin', ['ngRoute', 'ngResource'])
         $scope.property;
 
         $scope.init = function () {
-            $http.get('/admin/property').success(function(property) {
+            $http.get('/admin/property').success(function (property) {
                 $scope.property = property;
             })
         };
 
         $scope.save = function () {
-            $http.post('/admin/property', $scope.property).success(function(property) {
+            $http.post('/admin/property', $scope.property).success(function (property) {
                 $scope.property = property;
             });
         };
