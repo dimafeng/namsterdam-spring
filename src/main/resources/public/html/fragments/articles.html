@@ -34,8 +34,16 @@
                     <br>
 
                     <div class="input-group">
-                        <span class="input-group-addon">Date</span>
-                        <input type="date" class="form-control" ng-model="selectedArticle.displayDate">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="selectedArticle.displayDate"
+                                   is-open="opened" max-date="'2015-06-22'"
+                                   datepicker-options="dateOptions"
+                                   ng-required="true" close-text="Close"/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                        </p>
                     </div>
                     <br>
 

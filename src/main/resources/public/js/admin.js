@@ -1,4 +1,4 @@
-angular.module('admin', ['ngRoute', 'ngResource'])
+angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -114,6 +114,18 @@ angular.module('admin', ['ngRoute', 'ngResource'])
             article.$delete().then(function (res) {
                 $scope.init();
             });
+        };
+
+        $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
         };
     }).controller('PropertyCtrl', function ($scope, $http) {
 

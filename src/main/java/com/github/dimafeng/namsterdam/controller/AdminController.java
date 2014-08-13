@@ -74,7 +74,9 @@ public class AdminController {
     @RequestMapping(value = "/menus", method = RequestMethod.POST)
     @ResponseBody
     public Menu saveUpdateMenu(@RequestBody Menu menu) throws Exception {
-        menu.setBodyHTML(markdownService.processALL(menu.getBody()));
+        if (menu.getBody() != null) {
+            menu.setBodyHTML(markdownService.processALL(menu.getBody()));
+        }
         return menuRepository.save(menu);
     }
 
