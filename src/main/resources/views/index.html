@@ -49,35 +49,39 @@
     {% for a in articles %}
     <article class="white-panel">
 
-            <div>
-                <img style="width: 275px;" src="{{a.mainImage}}">
-            </div>
-            <div class="container-fluid" style="margin-bottom: 10px;">
-                <div class="row">
-                    <div class="col-md-10">
-                        <a href="/article/{{a.urlTitle}}"> <h1>{{ a.title }}</h1></a>
-                        <!--{{ a.smallText }}-->
-                    </div>
-                    <div class="col-md-2" style="padding: 10px 3px 0 0;">
-                        <img style="width: 30px;" src="{{a.user.avaUrl}}"/>
-                    </div>
+        <div>
+            <img style="width: 275px;" src="{{a.mainImage}}">
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <a href="/article/{{a.urlTitle}}"><h1>{{ a.title }}</h1></a>
+                    <!--{{ a.smallText }}-->
                 </div>
-                <!--<div class="row">
-                    <div class="col-md-12">
-                        {% for c in a.categories %}
-                        <span class="label label-warning">{{c}}</span>
-                        {% endfor %}
-                    </div>
-                </div>-->
-                <div class="row">
-                    <div class="col-md-12">
-                        {% for t in a.tags %}
-                        <span class="label label-primary">{{t}}</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-2" style="padding: 10px 3px 0 0;">
+                    <img style="width: 30px;" src="{{a.user.avaUrl}}"/>
                 </div>
             </div>
-
+            <!--<div class="row">
+                <div class="col-md-12">
+                    {% for c in a.categories %}
+                    <span class="label label-warning">{{c}}</span>
+                    {% endfor %}
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    {% for t in a.tags %}
+                    <span class="label label-primary">{{t}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                        <span style="display: block;font-weight: bolder;color: #999;font-size: 12px;margin: 10px;">
+                            <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{a.displayDate | date_format("dd.MM.yyyy") }}
+                        </span>
+            </div>
+        </div>
     </article>
     {% endfor %}
 

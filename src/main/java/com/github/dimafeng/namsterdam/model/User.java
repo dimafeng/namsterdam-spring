@@ -9,6 +9,7 @@ public class User {
     private String id;
     private String email;
     private String avaUrl;
+    private String fullName;
 
     private String password;
 
@@ -44,5 +45,13 @@ public class User {
 
     public void setAvaUrl(String avaUrl) {
         this.avaUrl = avaUrl;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

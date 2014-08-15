@@ -38,19 +38,9 @@ public class IndexController {
 
         Page<Article> articlePage = articleRepository.findAll(pageSpecification);
 
-        for (Article article : articlePage.getContent()) {
-            fillArticle(article);
-        }
-
         model.addAttribute("articles", articlePage.getContent());
 
         return "index";
-    }
-
-    private void fillArticle(Article article) {
-        if (article.getUserId() != null) {
-            article.setUser(userRepository.findOne(article.getUserId()));
-        }
     }
 
     @RequestMapping("/article/{articleName}")
@@ -58,7 +48,6 @@ public class IndexController {
     public String showArticle(@PathVariable("articleName") String articleName, Model model) {
 
         Article articlePage = articleRepository.findByUrlTitle(articleName);
-        fillArticle(articlePage);
         model.addAttribute("article", articlePage);
 
         return "article";
@@ -70,11 +59,6 @@ public class IndexController {
         Pageable pageSpecification = new PageRequest(0, 10);
 
         Page<Article> articlePage = articleRepository.findByCategory(categoryName, pageSpecification);
-
-        for (Article article : articlePage.getContent()) {
-            fillArticle(article);
-        }
-
         model.addAttribute("articles", articlePage.getContent());
 
         return "index";

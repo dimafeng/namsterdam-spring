@@ -109,9 +109,9 @@ public class AdminController {
     @ResponseBody
     public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
 
-        if(article.getId() == null || article.getId().isEmpty() || article.getUserId() == null || article.getUserId().isEmpty())
+        if(article.getId() == null || article.getId().isEmpty() || article.getUser() == null)
         {
-            article.setUserId(userRepository.findByEmail(authentication.getName()).getId());
+            article.setUser(userRepository.findByEmail(authentication.getName()));
         }
 
         article.setBodyHTML(markdownService.processALL(article.getBody()));
@@ -121,6 +121,9 @@ public class AdminController {
         }
         article.setUrlTitle(htmlService.translit(article.getTitle()));
         article.setMainImage(htmlService.getFirstImage(article.getBodyHTML()));
+        if (article.getDisplayDate() == null) {
+            article.setDisplayDate(new Date());
+        }
 
         return articleRepository.save(article);
     }

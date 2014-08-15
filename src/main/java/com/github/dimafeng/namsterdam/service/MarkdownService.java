@@ -41,7 +41,7 @@ public class MarkdownService {
 
             HashMap<String, Object> o = mapper.readValue(content, typeRef);
 
-            result = result.replace(m.group(1), "<img src=\""+o.get("url").toString()+"\">");
+            result = result.replace(m.group(1), "<div class=\"article-image\"><img src=\""+o.get("url").toString()+"\"></div>");
         }
 
         return result;
@@ -62,7 +62,7 @@ public class MarkdownService {
     }
 
     public String processALL(String body) throws Exception {
-        String result = processInstagram(body);
+        String result = body;
         /**
          * Markdown
          */
@@ -70,8 +70,8 @@ public class MarkdownService {
         markdown.transform(new InputStreamReader(new ByteArrayInputStream(result.getBytes())), sw);
 
         result = sw.toString();
-
         result = processMap(result);
+        result = processInstagram(result);
 
         return result;
     }

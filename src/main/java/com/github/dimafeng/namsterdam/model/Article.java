@@ -2,6 +2,7 @@ package com.github.dimafeng.namsterdam.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -23,7 +24,6 @@ public class Article {
     @Indexed
     private String urlTitle;
     private String mainImage;
-    private String userId;
 
     @Indexed
     private List<String> categories;
@@ -31,7 +31,8 @@ public class Article {
     @Indexed
     private List<String> tags;
 
-    transient User user;
+    @DBRef
+    private User user;
 
     public String getId() {
         return id;
@@ -119,14 +120,6 @@ public class Article {
 
     public void setSmallText(String smallText) {
         this.smallText = smallText;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public List<String> getCategories() {
