@@ -47,7 +47,7 @@
 
 <section id="demo" style="position: relative">
     {% for a in articles %}
-    <article class="white-panel">
+    <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'">
 
         <div>
             <img style="width: 275px;" src="{{a.mainImage}}">
