@@ -2,16 +2,39 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row article-full-content">
     <div class="col-md-3" style="text-align: center;">
         <div style="margin-top: 30px;">
             <img class="circular_ava" src="{{article.user.avaUrl}}">
-        <span style="display: block;font-weight: bolder;color: #999;font-size: 12px;margin-top: 15px;">
+        <div class="under-ava-block" style="margin-top: 15px;">
             {{article.user.fullName}}
-        </span>
-        <span style="display: block;font-weight: bolder;color: #999;font-size: 12px;margin-top: -10px;">
+        </div>
+        <div class="under-ava-block" style="margin-top: -10px;">
             <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{article.displayDate | date_format("dd.MM.yyyy") }}
-        </span>
+        </div>
+        <div class="under-ava-block" style="margin-top: -10px;">
+            <span class="glyphicon glyphicon-comment" style="margin-right: 10px;"></span><a href="#disqus_thread"></a>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'namsterdamus'; // required: replace example with your forum shortname
+
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function () {
+                    var s = document.createElement('script');
+                    s.async = true;
+                    s.type = 'text/javascript';
+                    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+                    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+                }());
+            </script>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% for t in article.tags %}
+                <span class="label label-default">{{t}}</span>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="col-md-9 article">

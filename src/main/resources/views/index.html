@@ -76,10 +76,16 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="row">
-                        <span style="display: block;font-weight: bolder;color: #999;font-size: 12px;margin: 10px;">
-                            <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{a.displayDate | date_format("dd.MM.yyyy") }}
-                        </span>
+            <div class="row comments-and-date">
+                <div class="col-md-7">
+                    <span class="glyphicon glyphicon-comment" style="margin-right: 10px;"></span><a
+                        href="/article/{{a.urlTitle}}#disqus_thread"></a>
+
+                </div>
+                <div class="col-md-5">
+                    <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{a.displayDate |
+                    date_format("dd.MM.yyyy") }}
+                </div>
             </div>
         </div>
     </article>
@@ -98,5 +104,19 @@
             single_column_breakpoint: 700
         });
     });
+</script>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'namsterdamus'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
 </script>
 {% endblock %}
