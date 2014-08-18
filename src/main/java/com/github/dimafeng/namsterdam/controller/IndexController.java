@@ -5,21 +5,22 @@ import com.github.dimafeng.namsterdam.dao.MenuRepository;
 import com.github.dimafeng.namsterdam.dao.UserRepository;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class IndexController {
+
+    static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -77,5 +78,10 @@ public class IndexController {
         model.addAttribute("menu", menu);
 
         return "menu";
+    }
+
+    @RequestMapping("/error500")
+    public String error() {
+        return "errors/500";
     }
 }

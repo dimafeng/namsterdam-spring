@@ -1,8 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'war'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 version = '1.0'
+
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -16,11 +18,13 @@ dependencies {
             'org.springframework:spring-aop:4.0.6.RELEASE',
             'javax.servlet:javax.servlet-api:3.0.1',
             'org.springframework.data:spring-data-mongodb:1.5.1.RELEASE',
-            'com.lyncode:jtwig-spring:2.1.7',
             'org.tautua.markdownpapers:markdownpapers-core:1.4.2',
             'org.aspectj:aspectjtools:1.7.4',
             'org.springframework.security:spring-security-web:3.2.4.RELEASE',
             'org.springframework.security:spring-security-config:3.2.4.RELEASE'
-
     )
+
+    compile('com.lyncode:jtwig-spring:2.1.7') {
+        exclude group: 'javax.servlet'
+    }
 }
