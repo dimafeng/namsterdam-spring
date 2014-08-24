@@ -197,3 +197,6 @@ time.icon span {
 .article-full-content .under-ava-block a, .comments-and-date a {
     color: #999;
 }
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    background: none;
+}
