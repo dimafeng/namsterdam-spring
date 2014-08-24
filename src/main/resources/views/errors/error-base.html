@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            background-image: url('/images/500.jpg');
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a {
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 450px; margin: 0 auto;color: #fff;padding-top: 200px;text-shadow: 2px 2px 1px rgba(50, 50, 50, 0.5);">
+    <div>
+        <div>
+            <a href="/"><img style="width: 450px;" src="/images/logo-white.png"></a>
+        </div>
+    </div>
+    <div>
+        <div style="font-size: 150px;float: left;">
+            {% block code %}
+            {% endblock %}
+        </div>
+        <div style="font-size: 14px;width: 200px;float: left;padding-top: 40px;">
+            <div style="font-size: 20px;">
+                {% block message %}
+                {% endblock %}
+            </div>
+            Если вы видели это раньше, пожалуйста, напишите нам <a
+                href="mailto:namsterdam.ny@gmail.com">namsterdam.ny@gmail.com</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

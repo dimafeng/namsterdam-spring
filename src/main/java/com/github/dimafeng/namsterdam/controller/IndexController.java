@@ -81,7 +81,12 @@ public class IndexController {
     }
 
     @RequestMapping("/error500")
-    public String error() {
+    public String error500() {
         return "errors/500";
+    }
+
+    @RequestMapping("/error404")
+    public String error404() {
+        return "errors/404";
     }
 }
