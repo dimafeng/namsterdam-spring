@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -37,7 +36,7 @@ public class IndexController {
 
         Pageable pageSpecification = new PageRequest(0, 10);
 
-        Page<Article> articlePage = articleRepository.findAll(pageSpecification);
+        Page<Article> articlePage = articleRepository.findAllByDisplay(true, pageSpecification);
 
         model.addAttribute("articles", articlePage.getContent());
 

@@ -14,6 +14,9 @@ public interface ArticleRepository extends MongoRepository<Article, String> {
 
     Article findByUrlTitle(String urlTitle);
 
-    @Query(value = "{'categories' : ?0 }")
+    @Query(value = "{'display' : ?0 }")
+    Page<Article> findAllByDisplay(boolean display, Pageable pageSpecification);
+
+    @Query(value = "{'categories' : ?0, 'display' : 'true' }")
     Page<Article> findByCategory(String category, Pageable pageSpecification);
 }
