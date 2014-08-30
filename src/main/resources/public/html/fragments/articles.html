@@ -27,6 +27,9 @@
             </div>
             <div class="col-md-9">
                 <div ng-show="showEditForm()">
+                    <div>
+                        <div class="alert alert-info" role="alert" ng-show="message != undefined">{{message}}</div>
+                    </div>
                     <div class="input-group">
                         <span class="input-group-addon">Title</span>
                         <input type="text" class="form-control" ng-model="selectedArticle.title">

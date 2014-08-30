@@ -62,7 +62,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         };
 
         $scope.showEditForm = function () {
-            return _.isUndefined($scope.selectedItem) || _.isUndefined($scope.selectedItem.empty);
+            return $scope.selectedItem != null;
         }
     })
     .controller('ArticlesCtrl', function ($scope, $resource) {
@@ -73,6 +73,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         $scope.selectedArticle = null;
         $scope.categories;
         $scope.tags;
+        $scope.message;
 
         $scope.$watch('selectedArticle', function (selectedArticle) {
             if (selectedArticle != null) {
@@ -91,6 +92,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         $scope.edit = function (article) {
             Article.get({id: article.id}, function (article) {
                 $scope.selectedArticle = article;
+                $scope.message = undefined;
             });
         };
 
@@ -105,8 +107,9 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         $scope.save = function () {
             $scope.selectedArticle.categories = $scope.categories.split(',');
             $scope.selectedArticle.tags = $scope.tags.split(',');
+            $scope.message = "Saving...";
             $scope.selectedArticle.$save().then(function (res) {
-                $scope.init();
+                $scope.message = "Ok";
             });
         };
 
