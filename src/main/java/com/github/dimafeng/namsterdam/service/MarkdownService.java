@@ -21,6 +21,7 @@ public class MarkdownService {
 
     public static final Pattern INSTAGRAM_PATTERN = Pattern.compile("(inst\\{([^\\}]*?)\\})");
     public static final Pattern MAP_PATTERN = Pattern.compile("(map\\{([^\\}]*?)\\})");
+    public static final Pattern FLICKR_PATTERN = Pattern.compile("(fl\\{([^\\}]*?)\\})");
 
     @Autowired
     private Markdown markdown;
@@ -31,6 +32,12 @@ public class MarkdownService {
         Matcher m = INSTAGRAM_PATTERN.matcher(body);
         while (m.find()) {
             String url = m.group(2);
+            String description = null;
+            if (url.contains("|")) {
+                String[] data = url.split("\\|");
+                url = data[0].trim();
+                description = data[1].trim();
+            }
 
             URL content = new URL("http://api.instagram.com/oembed?url=" + url);
 
@@ -41,7 +48,42 @@ public class MarkdownService {
 
             HashMap<String, Object> o = mapper.readValue(content, typeRef);
 
-            result = result.replace(m.group(1), "<div class=\"article-image\"><img src=\""+o.get("url").toString()+"\"></div>");
+            result = result.replace(m.group(1), "<div class=\"article-image\"><img src=\"" + o.get("url").toString() + "\">" +
+                    (description != null ? ("<div class=\"description description640\">" + description + "</div>") : "")
+                    + "</div>");
+        }
+
+        return result;
+    }
+
+    public String processFlickr(String body) throws Exception {
+        String result = body;
+
+        Matcher m = FLICKR_PATTERN.matcher(body);
+        while (m.find()) {
+            String url = m.group(2);
+            String description = null;
+            if (url.contains("|")) {
+                String[] data = url.split("\\|");
+                url = data[0].trim();
+                description = data[1].trim();
+            }
+
+            String images = null;
+            Matcher m2 = Pattern.compile("img src=\"([^\"]*?)\"").matcher(url);
+            if (m2.find()) {
+                images = m2.group(1);
+            }
+
+            String url2 = null;
+            Matcher m3 = Pattern.compile("href=\"([^\"]*?)\"").matcher(url);
+            if (m3.find()) {
+                url2 = m3.group(1);
+            }
+
+            result = result.replace(m.group(1), "<div class=\"article-image\"><a target=\"_blank\" href=\"" + url2 + "\"><img src=\"" + images + "\"></a>" +
+                    (description != null ? ("<div class=\"description description800\">" + description + "</div>") : "")
+                    + "</div>");
         }
 
         return result;
@@ -55,7 +97,7 @@ public class MarkdownService {
             String url = m.group(2);
 
             result = result.replace(m.group(1), "<div class=\"article-map\"><div class=\"article-map-wrapper\"><iframe width=\"100%\" height=\"450\" frameborder=\"0\" style=\"border:0\"\n" +
-                    "src=\""+url.toString()+"&key=AIzaSyCfwXzKm-L9CGIRBHTVXBylk2el1sZ-iYw\"></iframe></div></div>");
+                    "src=\"" + url.toString() + "&key=AIzaSyCfwXzKm-L9CGIRBHTVXBylk2el1sZ-iYw\"></iframe></div></div>");
         }
 
         return result;
@@ -72,6 +114,7 @@ public class MarkdownService {
         result = sw.toString();
         result = processMap(result);
         result = processInstagram(result);
+        result = processFlickr(result);
 
         return result;
     }

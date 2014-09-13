@@ -160,6 +160,25 @@ time.icon span {
 .article-image {
     width: 100%;
     text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.article-image .description {
+    width: 640px;
+    margin: 0 auto;
+    text-align: left;
+    font-style: italic;
+    font-size: 14px;
+    color: #555;
+}
+
+.article-image .description800 {
+    width: 800px;
+}
+
+.article-image .description640 {
+    width: 640px;
 }
 
 .article-map-wrapper {
