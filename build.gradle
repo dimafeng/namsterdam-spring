@@ -21,7 +21,8 @@ dependencies {
             'org.tautua.markdownpapers:markdownpapers-core:1.4.2',
             'org.aspectj:aspectjtools:1.7.4',
             'org.springframework.security:spring-security-web:3.2.4.RELEASE',
-            'org.springframework.security:spring-security-config:3.2.4.RELEASE'
+            'org.springframework.security:spring-security-config:3.2.4.RELEASE',
+            'org.slf4j:slf4j-nop:1.7.7'
     )
 
     compile('com.lyncode:jtwig-spring:2.1.7') {
