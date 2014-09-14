@@ -50,6 +50,8 @@ public class IndexController {
         Article articlePage = articleRepository.findByUrlTitle(articleName);
         model.addAttribute("article", articlePage);
 
+        articleRepository.getAndIncViews(articlePage.getId());
+
         return "article";
     }
 

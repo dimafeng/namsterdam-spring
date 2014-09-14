@@ -33,6 +33,8 @@ public class Article {
 
     @DBRef
     private User user;
+    @Indexed
+    private Long views;
 
     public String getId() {
         return id;
@@ -144,5 +146,13 @@ public class Article {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
     }
 }
