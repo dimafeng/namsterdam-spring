@@ -17,6 +17,10 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
                 controller: 'PropertyCtrl',
                 templateUrl: '/html/fragments/prop.html'
             })
+            .when('/categories', {
+                controller: 'CategoriesCtrl',
+                templateUrl: '/html/fragments/categories.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -68,16 +72,21 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
     .controller('ArticlesCtrl', function ($scope, $resource) {
 
         var Article = $resource('/admin/articles/:id', {id: '@id'});
+        var Category = $resource('/admin/categories/:id', {id: '@id'});
 
         $scope.articles = [];
         $scope.selectedArticle = null;
-        $scope.categories;
+
+        $scope.allCategories;
+
+        $scope.category = null;
+
         $scope.tags;
         $scope.message;
 
         $scope.$watch('selectedArticle', function (selectedArticle) {
             if (selectedArticle != null) {
-                $scope.categories = selectedArticle.categories == null? '' : selectedArticle.categories.join(',');
+                //$scope.categories = selectedArticle.categories == null? '' : selectedArticle.categories.join(',');
                 $scope.tags = selectedArticle.tags == null? '' : selectedArticle.tags.join(',');
             }
         });
@@ -87,12 +96,21 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
                 $scope.articles = articles;
                 $scope.selectedArticle = null;
             });
+
+            Category.query(function (items) {
+                $scope.allCategories = items;
+            });
         };
 
         $scope.edit = function (article) {
             Article.get({id: article.id}, function (article) {
                 $scope.selectedArticle = article;
                 $scope.message = undefined;
+                try {
+                    $scope.category = article.categoryList[0].id;
+                } catch (e) {
+                    $scope.category = null;
+                }
             });
         };
 
@@ -105,8 +123,9 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         };
 
         $scope.save = function () {
-            $scope.selectedArticle.categories = $scope.categories.split(',');
+            //$scope.selectedArticle.categories = $scope.categories.split(',');
             $scope.selectedArticle.tags = $scope.tags.split(',');
+            $scope.selectedArticle.categoryList =$scope.category != null ?[{id: $scope.category}]:[];
             $scope.message = "Saving...";
             $scope.selectedArticle.$save().then(function (res) {
                 $scope.message = "Ok";
@@ -184,5 +203,48 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 
         $scope.showEditForm = function () {
             return !_.isUndefined($scope.selectedUser);
+        }
+    }).controller('CategoriesCtrl', function ($scope, $resource) {
+
+        var Category = $resource('/admin/categories/:id', {id: '@id'});
+
+        $scope.selectedItem;
+        $scope.items = [
+        ];
+
+        var loadItems = function () {
+            Category.query(function (menus) {
+                $scope.items = menus;
+            });
+        };
+
+        $scope.init = function () {
+            loadItems();
+        };
+
+        $scope.add = function () {
+            $scope.selectedItem = new Category();
+        };
+
+        $scope.delete = function (menu) {
+            menu.$delete().then(function (res) {
+                $scope.init();
+            });
+        };
+
+        $scope.edit = function (menuItem) {
+            Category.get({id: menuItem.id}, function (menuItem) {
+                $scope.selectedItem = menuItem;
+            });
+        };
+
+        $scope.save = function () {
+            $scope.selectedItem.$save().then(function (res) {
+                loadItems();
+            });
+        };
+
+        $scope.showEditForm = function () {
+            return $scope.selectedItem != null;
         }
     });

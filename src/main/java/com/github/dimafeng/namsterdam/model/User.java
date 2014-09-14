@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class User {
+public class User implements Model {
     private String id;
     private String email;
     private String avaUrl;

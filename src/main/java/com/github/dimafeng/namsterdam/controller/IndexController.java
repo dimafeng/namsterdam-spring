@@ -56,16 +56,16 @@ public class IndexController {
         return "article";
     }
 
-    @RequestMapping("/category/{categoryName}")
-    @MenuConsumer
-    public String category(@PathVariable("categoryName") String categoryName, Model model) {
-        Pageable pageSpecification = new PageRequest(0, 10);
-
-        Page<Article> articlePage = articleRepository.findByCategory(categoryName, pageSpecification);
-        model.addAttribute("articles", articlePage.getContent());
-
-        return "index";
-    }
+//    @RequestMapping("/category/{categoryName}")
+//    @MenuConsumer
+//    public String category(@PathVariable("categoryName") String categoryName, Model model) {
+//        Pageable pageSpecification = new PageRequest(0, 10);
+//
+//        Page<Article> articlePage = articleRepository.findByCategory(categoryName, pageSpecification);
+//        model.addAttribute("articles", articlePage.getContent());
+//
+//        return "index";
+//    }
 
     @RequestMapping("/s/{pageName}")
     @MenuConsumer

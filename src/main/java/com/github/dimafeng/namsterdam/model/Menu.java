@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Menu {
+public class Menu implements Model {
     @Id
     private String id;
     private String name;

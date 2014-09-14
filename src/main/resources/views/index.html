@@ -52,6 +52,11 @@
         <div>
             <img style="width: 275px;" src="{{a.mainImage}}">
         </div>
+        {% if (a.hasCategory) %}
+        <div class="category">
+            {{a.firstCategory.name}}
+        </div>
+        {% endif %}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10">
@@ -62,20 +67,13 @@
                     <img style="width: 30px;" src="{{a.user.avaUrl}}"/>
                 </div>
             </div>
-            <!--<div class="row">
-                <div class="col-md-12">
-                    {% for c in a.categories %}
-                    <span class="label label-warning">{{c}}</span>
-                    {% endfor %}
-                </div>
-            </div>-->
-            <div class="row">
-                <div class="col-md-12">
-                    {% for t in a.tags %}
-                    <span class="label label-primary">{{t}}</span>
-                    {% endfor %}
-                </div>
-            </div>
+            <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                    <!--{% for t in a.tags %}-->
+                    <!--<span class="label label-primary">{{t}}</span>-->
+                    <!--{% endfor %}-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="row comments-and-date">
                 <div class="col-md-7">
                     <span class="glyphicon glyphicon-comment" style="margin-right: 10px;"></span><a

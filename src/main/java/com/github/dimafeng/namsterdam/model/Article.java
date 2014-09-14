@@ -1,5 +1,6 @@
 package com.github.dimafeng.namsterdam.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Document
-public class Article {
+public class Article implements Model {
     @Id
     private String id;
 
@@ -26,7 +27,8 @@ public class Article {
     private String mainImage;
 
     @Indexed
-    private List<String> categories;
+    @DBRef
+    private List<Category> categoryList;
 
     @Indexed
     private List<String> tags;
@@ -124,12 +126,12 @@ public class Article {
         this.smallText = smallText;
     }
 
-    public List<String> getCategories() {
-        return categories;
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     public User getUser() {
@@ -154,5 +156,15 @@ public class Article {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    @JsonIgnore
+    public boolean isHasCategory() {
+        return categoryList != null && !categoryList.isEmpty();
+    }
+
+    @JsonIgnore
+    public Category getFirstCategory() {
+        return isHasCategory() ? categoryList.iterator().next() : null;
     }
 }

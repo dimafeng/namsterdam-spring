@@ -65,7 +65,10 @@
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">Categories</span>
-                        <input type="text" class="form-control" ng-model="categories">
+                        <select class="form-control" ng-model="category">
+                            <option value="null">Select category</option>
+                            <option ng-repeat="cat in allCategories" value="{{cat.id}}">{{cat.name}}</option>
+                        </select>
                     </div>
                     <br>
                     <div class="input-group">

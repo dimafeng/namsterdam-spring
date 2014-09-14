@@ -1,0 +1,52 @@
+<div ng-controller="CategoriesCtrl">
+    <div ng-init="init()">
+
+        <h1>Categories</h1>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <table class="table">
+                        <tr>
+                            <td>Name</td>
+                            <td></td>
+                        </tr>
+                        <tr ng-repeat="item in items">
+                            <td>
+                                <a ng-click="edit(item)">{{item.name}}</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="delete(item)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <button type="button" class="btn btn-default" ng-click="add()">
+                        <span class="glyphicon glyphicon-plus">Add new</span>
+                    </button>
+                </div>
+                <div class="col-md-9">
+                    <div ng-show="showEditForm()">
+                        <div class="input-group">
+                            <span class="input-group-addon">Sort Index</span>
+                            <input type="text" class="form-control" ng-model="selectedItem.sortIndex">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Name</span>
+                            <input type="text" class="form-control" ng-model="selectedItem.name">
+                        </div>
+                        <br>
+                        <div style="margin-top: 20px;">
+                            <button type="button" class="btn btn-success" ng-click="save()">
+                                <span class="glyphicon glyphicon-ok">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
