@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class IndexController {
     @MenuConsumer
     public String showIndex(Model model) {
 
-        Pageable pageSpecification = new PageRequest(0, 10);
+        Pageable pageSpecification = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "displayDate"));
 
         Page<Article> articlePage = articleRepository.findAllByDisplay(true, pageSpecification);
 
