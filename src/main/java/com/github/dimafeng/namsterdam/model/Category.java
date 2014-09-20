@@ -1,6 +1,7 @@
 package com.github.dimafeng.namsterdam.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -8,6 +9,8 @@ public class Category implements Model {
     @Id
     private String id;
     private String name;
+    @Indexed
+    private String urlTitle;
     private int sortIndex;
 
     public String getId() {
@@ -32,5 +35,13 @@ public class Category implements Model {
 
     public void setSortIndex(int sortIndex) {
         this.sortIndex = sortIndex;
+    }
+
+    public String getUrlTitle() {
+        return urlTitle;
+    }
+
+    public void setUrlTitle(String urlTitle) {
+        this.urlTitle = urlTitle;
     }
 }

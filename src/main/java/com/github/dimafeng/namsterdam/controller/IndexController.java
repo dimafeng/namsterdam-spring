@@ -1,10 +1,13 @@
 package com.github.dimafeng.namsterdam.controller;
 
 import com.github.dimafeng.namsterdam.dao.ArticleRepository;
+import com.github.dimafeng.namsterdam.dao.CategoryRepository;
 import com.github.dimafeng.namsterdam.dao.MenuRepository;
 import com.github.dimafeng.namsterdam.dao.UserRepository;
 import com.github.dimafeng.namsterdam.model.Article;
+import com.github.dimafeng.namsterdam.model.Category;
 import com.github.dimafeng.namsterdam.model.Menu;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -30,6 +35,9 @@ public class IndexController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @RequestMapping("/")
     @MenuConsumer
@@ -56,16 +64,23 @@ public class IndexController {
         return "article";
     }
 
-//    @RequestMapping("/category/{categoryName}")
-//    @MenuConsumer
-//    public String category(@PathVariable("categoryName") String categoryName, Model model) {
-//        Pageable pageSpecification = new PageRequest(0, 10);
-//
-//        Page<Article> articlePage = articleRepository.findByCategory(categoryName, pageSpecification);
-//        model.addAttribute("articles", articlePage.getContent());
-//
-//        return "index";
-//    }
+    @RequestMapping("/categories")
+    @MenuConsumer
+    public String category(Model model) {
+        model.addAttribute("categories", categoryRepository.findAll(new Sort(Sort.Direction.ASC, "sortIndex")));
+        return "categories";
+    }
+
+    @RequestMapping("/category/{categoryName}")
+    @MenuConsumer
+    public String category(@PathVariable("categoryName") String categoryName, Model model) {
+        Pageable pageSpecification = new PageRequest(0, 10);
+
+        Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), pageSpecification);
+        model.addAttribute("articles", articlePage.getContent());
+
+        return "index";
+    }
 
     @RequestMapping("/s/{pageName}")
     @MenuConsumer

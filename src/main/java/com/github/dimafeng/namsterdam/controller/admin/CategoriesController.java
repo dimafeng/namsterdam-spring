@@ -3,6 +3,7 @@ package com.github.dimafeng.namsterdam.controller.admin;
 
 import com.github.dimafeng.namsterdam.dao.CategoryRepository;
 import com.github.dimafeng.namsterdam.model.Category;
+import com.github.dimafeng.namsterdam.service.HTMLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.access.annotation.Secured;
@@ -18,9 +19,12 @@ public class CategoriesController implements CRUDMapping<Category> {
     @Autowired
     private CategoryRepository repository;
 
+    @Autowired
+    private HTMLService htmlService;
+
     @Override
     public void processBeforeSave(Category item) {
-
+        item.setUrlTitle(htmlService.translit(item.getName()));
     }
 
     @Override

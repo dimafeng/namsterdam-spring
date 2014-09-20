@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Update;
 
 public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
 
+    static final Logger log = LoggerFactory.getLogger(ArticleRepositoryImpl.class);
+
     @Autowired
     private MongoTemplate mongoTemplate;
 

@@ -1,0 +1,9 @@
+{% extends "default.html" %}
+
+{% block content %}
+
+{% for c in categories %}
+<a href="/category/{{c.urlTitle}}"><h1>{{c.name}}</h1></a>
+{% endfor %}
+
+{% endblock %}

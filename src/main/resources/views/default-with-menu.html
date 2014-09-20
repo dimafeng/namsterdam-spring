@@ -2,30 +2,7 @@
 
 {% block header %}
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="/"><img src="{{staticPath}}/images/logo.png"/></a>
-        </div>
-        <div class="navbar-collapse collapse" style="margin-top: 60px;">
-            <ul class="nav navbar-nav navbar-right">
-                {% for m in menus %}
-                {% if m.url == selectedMenu %}
-                <li class="active">
-                    {% else %}
-                <li>
-                    {% endif %}
-
-                    {% if m.link %}
-                    <a href="{{m.url}}">{{m.name}}</a>
-                    {% else %}
-                    <a href="/s/{{m.url}}">{{m.name}}</a>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
+    {% include 'fragments/menu.html' %}
 </div>
 <script>
     $(function () {

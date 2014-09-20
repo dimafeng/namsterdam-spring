@@ -18,7 +18,25 @@
 </head>
 <body>
 <header>
-    {% block header %} {% endblock %}
+    {% block header %}
+    <div class="navbar navbar-default" role="navigation">
+        {% include 'fragments/menu.html' %}
+    </div>
+    <div style="background: url('{{staticPath}}/images/main-bg2.jpg'); width: 100%; height: 600px;">
+        <div style="padding-top: 160px; width: 100%;text-align: center;">
+            <img src="{{staticPath}}/images/logo-white.png">
+            <!--div style="color: #fff;font-size: 16px; font-family: 'Marck Script', cursive;">
+                Мир всегда будет находиться с Америкой в таких вот странных отношениях: <br>любить ее и ненавидеть одновременно.
+            </div-->
+            <div>
+                <a href="http://vk.com/n.amsterdam" target="_blank"><img src="{{staticPath}}/images/vk.png"></a>
+                <a href="https://www.youtube.com/user/NAmsterdamvlog" target="_blank"><img src="{{staticPath}}/images/yt.png"></a>
+                <a href="https://twitter.com/NAmsterdamvlog" target="_blank"><img src="{{staticPath}}/images/tw.png"></a>
+                <a href="http://instagram.com/n.amsterdam" target="_blank"><img src="{{staticPath}}/images/inst.png"></a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
 </header>
 
 <div class="main-container">
