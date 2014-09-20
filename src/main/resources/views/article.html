@@ -14,7 +14,7 @@
             {{article.user.fullName}}
         </div>
         <div class="under-ava-block" style="margin-top: -10px;">
-            <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{article.displayDate | date_format("dd.MM.yyyy") }}
+            <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
             &nbsp;
             <span class="glyphicon glyphicon-eye-open" style="margin-right: 10px;"></span>{{article.views}}
         </div>

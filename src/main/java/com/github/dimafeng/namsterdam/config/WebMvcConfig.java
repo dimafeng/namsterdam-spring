@@ -31,6 +31,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("classpath:/public/js/").setCachePeriod(31556926);
         registry.addResourceHandler("/html/**")
-                .addResourceLocations("classpath:/public/html/").setCachePeriod(31556926);
+                .addResourceLocations("classpath:/public/html/");
     }
 }

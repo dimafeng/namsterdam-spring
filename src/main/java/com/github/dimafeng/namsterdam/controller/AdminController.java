@@ -8,15 +8,19 @@ import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
 import com.github.dimafeng.namsterdam.model.Property;
 import com.github.dimafeng.namsterdam.model.User;
-import com.github.dimafeng.namsterdam.service.MarkdownService;
 import com.github.dimafeng.namsterdam.service.HTMLService;
+import com.github.dimafeng.namsterdam.service.MarkdownService;
 import com.github.dimafeng.namsterdam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +29,12 @@ import java.util.List;
 @RequestMapping("/admin")
 @Secured("ROLE_ADMIN")
 public class AdminController {
+
+    @Value("${mongo.db.name}")
+    private String databaseName;
+
+    @Value("${mongo.db.server}")
+    private String databaseServer;
 
     @Autowired
     private MenuRepository menuRepository;
@@ -109,8 +119,7 @@ public class AdminController {
     @ResponseBody
     public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
 
-        if(article.getId() == null || article.getId().isEmpty() || article.getUser() == null)
-        {
+        if (article.getId() == null || article.getId().isEmpty() || article.getUser() == null) {
             article.setUser(userRepository.findByEmail(authentication.getName()));
         }
 
@@ -190,5 +199,14 @@ public class AdminController {
     @ResponseBody
     public void deleteUser(@PathVariable("userId") String id) {
         userRepository.delete(id);
+    }
+
+    @RequestMapping(value = "/backup.zip", method = RequestMethod.GET)
+    public void downloadBackup(HttpServletResponse response) throws Exception {
+        Runtime.getRuntime().exec(new String[]{"rm", "-rf /tmp/backup & mongodump -db " + databaseName + " --out=/tmp/backup"}).waitFor();
+        Runtime.getRuntime().exec(new String[]{"zip", "-r /tmp/backup.zip /tmp/backup"}).waitFor();
+        response.setHeader("Content-Type", "application/octet-stream");
+        Files.copy(Paths.get("/tmp/backup.zip"), response.getOutputStream());
+        response.flushBuffer();
     }
 }
