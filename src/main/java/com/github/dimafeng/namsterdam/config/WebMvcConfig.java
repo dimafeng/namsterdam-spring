@@ -23,14 +23,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
-                .addResourceLocations("classpath:/assets/");
+                .addResourceLocations("classpath:/assets/").setCachePeriod(31556926);
         registry.addResourceHandler("/css/**")
-                .addResourceLocations("classpath:/public/css/");
+                .addResourceLocations("classpath:/public/css/").setCachePeriod(31556926);
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("classpath:/public/images/");
+                .addResourceLocations("classpath:/public/images/").setCachePeriod(31556926);
         registry.addResourceHandler("/js/**")
-                .addResourceLocations("classpath:/public/js/");
+                .addResourceLocations("classpath:/public/js/").setCachePeriod(31556926);
         registry.addResourceHandler("/html/**")
-                .addResourceLocations("classpath:/public/html/");
+                .addResourceLocations("classpath:/public/html/").setCachePeriod(31556926);
     }
 }
