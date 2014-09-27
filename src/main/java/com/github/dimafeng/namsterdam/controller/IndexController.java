@@ -43,7 +43,7 @@ public class IndexController {
     @MenuConsumer
     public String showIndex(Model model) {
 
-        Pageable pageSpecification = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "displayDate"));
+        Pageable pageSpecification = new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"));
 
         Page<Article> articlePage = articleRepository.findAllByDisplay(true, pageSpecification);
 
