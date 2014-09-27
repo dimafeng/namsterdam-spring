@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -95,6 +96,15 @@ public class IndexController {
         model.addAttribute("menu", menu);
 
         return "menu";
+    }
+
+    @RequestMapping(value = "/rssfeed", method = RequestMethod.GET, produces = "application/rss+xml; charset=utf-8")
+    public ModelAndView getFeedInRss() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("rssViewer");
+        mav.addObject("feedContent", articleRepository.findAllByDisplay(true, new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"))).getContent());
+
+        return mav;
     }
 
     @RequestMapping("/error500")
