@@ -112,19 +112,32 @@ public class AdminController {
     @ResponseBody
     public Article saveUpdateArticles(@PathVariable("articleId") String id, @RequestBody Article article, Authentication authentication) throws Exception {
         article.setId(id);
-        return saveUpdateArticles(article, authentication);
+        return updateArticle(article, authentication, true);
+    }
+
+    @RequestMapping(value = "/articles/{articleId}/draft", method = RequestMethod.POST)
+    @ResponseBody
+    public Article draftArticles(@PathVariable("articleId") String id, @RequestBody Article article, Authentication authentication) throws Exception {
+        article.setId(id);
+        return updateArticle(article, authentication, false);
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.POST)
     @ResponseBody
     public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
+        return updateArticle(article, authentication, true);
+    }
 
+    private Article updateArticle(Article article, Authentication authentication, boolean publish) throws Exception {
         if (article.getId() == null || article.getId().isEmpty() || article.getUser() == null) {
             article.setUser(userRepository.findByEmail(authentication.getName()));
         }
 
-        article.setBodyHTML(markdownService.processALL(article.getBody()));
-        article.setUpdateDate(new Date());
+        if (publish) {
+            article.setBodyHTML(markdownService.processALL(article.getBody()));
+            article.setUpdateDate(new Date());
+        }
+
         if (article.getCreationDate() != null) {
             article.setCreationDate(new Date());
         }

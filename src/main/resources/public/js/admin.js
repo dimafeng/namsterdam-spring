@@ -71,7 +71,9 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
     })
     .controller('ArticlesCtrl', function ($scope, $resource, $http) {
 
-        var Article = $resource('/admin/articles/:id', {id: '@id'});
+        var Article = $resource('/admin/articles/:id', {id: '@id'}, {
+            'draft': { url: '/admin/articles/:id/draft', method: 'POST' }
+        });
         var Category = $resource('/admin/categories/:id', {id: '@id'});
 
         $scope.articles = [];
@@ -125,12 +127,21 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             $scope.selectedArticle = new Article();
         };
 
-        $scope.save = function () {
-            //$scope.selectedArticle.categories = $scope.categories.split(',');
+        $scope.publish = function () {
+            save($scope.selectedArticle.$save);
+        };
+
+        $scope.draft = function () {
+            save($scope.selectedArticle.$draft);
+        };
+
+        var save = function (savingMethod) {
             $scope.selectedArticle.tags = $scope.tags.split(',');
-            $scope.selectedArticle.categoryList =$scope.category != null ?[{id: $scope.category}]:[];
+            $scope.selectedArticle.categoryList = $scope.category != null ? [
+                {id: $scope.category}
+            ] : [];
             $scope.message = "Saving...";
-            $scope.selectedArticle.$save().then(function (res) {
+            savingMethod.apply($scope.selectedArticle).then(function (res) {
                 $scope.message = "Ok";
             });
         };
