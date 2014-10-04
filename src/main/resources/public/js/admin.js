@@ -80,10 +80,10 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
         $scope.selectedArticle = null;
 
         $scope.allCategories;
-
         $scope.category = null;
-
         $scope.tags;
+
+        $scope.body;
 
         $scope.previewHTML = null;
 
@@ -91,6 +91,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             if (selectedArticle != null) {
                 $scope.tags = selectedArticle.tags == null ? '' : selectedArticle.tags.join(',');
                 $scope.previewHTML = null;
+                $scope.body = selectedArticle.body;
 
                 /**
                  * Start autosaving timer
@@ -100,6 +101,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
                 });
             } else {
                 globalService.stopTimer();
+                $scope.body = null;
             }
         });
 
@@ -148,6 +150,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             $scope.selectedArticle.categoryList = $scope.category != null ? [
                 {id: $scope.category}
             ] : [];
+            $scope.selectedArticle.body = $scope.body;
             savingMethod.apply($scope.selectedArticle).then(function (res) {
                 globalService.addMessage(successMessage || "Saved...");
             });
