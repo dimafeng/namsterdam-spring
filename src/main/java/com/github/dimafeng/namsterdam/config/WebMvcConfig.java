@@ -1,6 +1,6 @@
 package com.github.dimafeng.namsterdam.config;
 
-import com.github.dimafeng.namsterdam.controller.CustomRssViewer;
+import com.github.dimafeng.namsterdam.controller.CustomAtomViewer;
 import com.lyncode.jtwig.mvc.JtwigViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean(name = "rssViewer")
-    public CustomRssViewer rssViewer() {
-        return new CustomRssViewer();
+    public CustomAtomViewer rssViewer() {
+        return new CustomAtomViewer();
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

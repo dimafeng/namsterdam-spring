@@ -20,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -98,13 +100,20 @@ public class IndexController {
         return "menu";
     }
 
-    @RequestMapping(value = "/rssfeed", method = RequestMethod.GET, produces = "application/rss+xml; charset=utf-8")
-    public ModelAndView getFeedInRss() {
+    @RequestMapping(value = "/feedAtom", method = RequestMethod.GET)
+    public ModelAndView getFeedAtom(HttpServletResponse response) {
+        response.setCharacterEncoding("UTF-8");
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("rssViewer");
         mav.addObject("feedContent", articleRepository.findAllByDisplay(true, new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"))).getContent());
 
         return mav;
+    }
+
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
+    public void feedburner(HttpServletResponse response) throws IOException {
+        response.sendRedirect("http://feeds.feedburner.com/namsterdam");
     }
 
     @RequestMapping("/error500")
