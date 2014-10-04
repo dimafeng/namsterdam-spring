@@ -143,6 +143,12 @@ public class AdminController {
         articleRepository.delete(id);
     }
 
+    @RequestMapping(value = "/articles/preview", method = RequestMethod.POST)
+    @ResponseBody
+    public String articlePreview(@RequestBody String text) throws Exception {
+        return markdownService.processALL(text);
+    }
+
     @RequestMapping(value = "/property", method = RequestMethod.GET)
     @ResponseBody
     public Property getProperty() {

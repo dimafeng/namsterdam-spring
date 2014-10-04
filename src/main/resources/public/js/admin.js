@@ -1,4 +1,4 @@
-angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -69,7 +69,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
             return $scope.selectedItem != null;
         }
     })
-    .controller('ArticlesCtrl', function ($scope, $resource) {
+    .controller('ArticlesCtrl', function ($scope, $resource, $http) {
 
         var Article = $resource('/admin/articles/:id', {id: '@id'});
         var Category = $resource('/admin/categories/:id', {id: '@id'});
@@ -84,10 +84,13 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         $scope.tags;
         $scope.message;
 
+        $scope.previewHTML = null;
+
         $scope.$watch('selectedArticle', function (selectedArticle) {
             if (selectedArticle != null) {
                 //$scope.categories = selectedArticle.categories == null? '' : selectedArticle.categories.join(',');
                 $scope.tags = selectedArticle.tags == null? '' : selectedArticle.tags.join(',');
+                $scope.previewHTML = null;
             }
         });
 
@@ -116,7 +119,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
 
         $scope.showEditForm = function () {
             return $scope.selectedArticle != null;
-        }
+        };
 
         $scope.add = function () {
             $scope.selectedArticle = new Article();
@@ -148,6 +151,17 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap'])
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
+        };
+
+        $scope.preview = function () {
+            console.log('Preview generating');
+            if ($scope.previewHTML == null) {
+                $http.post('/admin/articles/preview', $scope.selectedArticle.body).then(function (result) {
+                    $scope.previewHTML = result.data;
+                });
+            } else {
+                $scope.previewHTML = null;
+            }
         };
     }).controller('PropertyCtrl', function ($scope, $http) {
 

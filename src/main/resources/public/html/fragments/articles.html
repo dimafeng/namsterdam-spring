@@ -73,8 +73,16 @@
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">Tags</span>
-                        <input type="text" class="form-control" ng-model="tags">
+                        <input type="text" class="form-control"   >
                     </div>
+                    <br>
+
+                    <a ng-click="preview()" style="cursor: pointer;">Preview</a>
+
+                    <div ng-show="preview != null" ng-bind-html="previewHTML"
+                         style="background: #eee;border: 1px dashed #aaa;padding: 20px;">
+                    </div>
+
                     <br>
                     <div style="margin-top: 20px;">
                         <button type="button" class="btn btn-success" ng-click="save()">
