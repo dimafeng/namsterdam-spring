@@ -69,7 +69,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             return $scope.selectedItem != null;
         }
     })
-    .controller('ArticlesCtrl', function ($scope, $resource, $http) {
+    .controller('ArticlesCtrl', function ($scope, $resource, $http, globalService) {
 
         var Article = $resource('/admin/articles/:id', {id: '@id'}, {
             'draft': { url: '/admin/articles/:id/draft', method: 'POST' }
@@ -84,15 +84,22 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
         $scope.category = null;
 
         $scope.tags;
-        $scope.message;
 
         $scope.previewHTML = null;
 
         $scope.$watch('selectedArticle', function (selectedArticle) {
             if (selectedArticle != null) {
-                //$scope.categories = selectedArticle.categories == null? '' : selectedArticle.categories.join(',');
-                $scope.tags = selectedArticle.tags == null? '' : selectedArticle.tags.join(',');
+                $scope.tags = selectedArticle.tags == null ? '' : selectedArticle.tags.join(',');
                 $scope.previewHTML = null;
+
+                /**
+                 * Start autosaving timer
+                 */
+                globalService.startTimer(function () {
+                    $scope.draft();
+                });
+            } else {
+                globalService.stopTimer();
             }
         });
 
@@ -128,21 +135,21 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
         };
 
         $scope.publish = function () {
+            globalService.addMessage("Publishing...");
             save($scope.selectedArticle.$save);
         };
 
         $scope.draft = function () {
-            save($scope.selectedArticle.$draft);
+            save($scope.selectedArticle.$draft, "Autosaved as draft...");
         };
 
-        var save = function (savingMethod) {
+        var save = function (savingMethod, successMessage) {
             $scope.selectedArticle.tags = $scope.tags.split(',');
             $scope.selectedArticle.categoryList = $scope.category != null ? [
                 {id: $scope.category}
             ] : [];
-            $scope.message = "Saving...";
             savingMethod.apply($scope.selectedArticle).then(function (res) {
-                $scope.message = "Ok";
+                globalService.addMessage(successMessage || "Saved...");
             });
         };
 
@@ -272,4 +279,41 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
         $scope.showEditForm = function () {
             return $scope.selectedItem != null;
         }
+    }).factory('globalService', function($rootScope) {
+        var timer = null;
+        var stop = function () {
+            if (timer != null) {
+                clearInterval(timer);
+            }
+        };
+
+        $rootScope.$on ("$routeChangeStart", function() {
+            stop(timer);
+        });
+
+        var messages = [];
+
+        return {
+            startTimer: function(func) {
+                stop(timer);
+                timer = setInterval(function () {
+                    func();
+                }, 5000);
+            },
+            stopTimer: function() {
+                stop(timer);
+            },
+            messages: function() {
+                return messages;
+            },
+            addMessage: function(message) {
+                messages.push({text: message});
+                setTimeout(function() {
+                    messages.shift();
+                    $rootScope.$apply();
+                }, 2000);
+            }
+        };
+    }).controller('NotificationCtrl', function($scope, globalService) {
+        $scope.messages = globalService.messages();
     });
