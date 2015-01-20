@@ -7,7 +7,8 @@
 
     <meta name="description" content="{% block description %}Новый Амстердам{% endblock %}" />
     <meta name="news_keywords" content="{% block keywords %}Новый Амстердам{% endblock %}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -23,18 +24,19 @@
         {% include 'fragments/menu.html' %}
     </div>
     <div style="background: url('{{staticPath}}/images/main-bg2.jpg'); width: 100%; height: 600px;">
-        <div style="padding-top: 160px; width: 100%;text-align: center;">
-            <img src="{{staticPath}}/images/logo-white.png">
+        <div id="nav-container-logo-test" style="padding-top: 160px;text-align: center;">
+            <div id="nav-logo-namsterdam-test" style ="height:200px;">
             <!--div style="color: #fff;font-size: 16px; font-family: 'Marck Script', cursive;">
                 Мир всегда будет находиться с Америкой в таких вот странных отношениях: <br>любить ее и ненавидеть одновременно.
             </div-->
+            </div>
             <div>
                 <a href="http://vk.com/n.amsterdam" target="_blank"><img src="{{staticPath}}/images/vk.png"></a>
                 <a href="https://www.youtube.com/user/NAmsterdamvlog" target="_blank"><img src="{{staticPath}}/images/yt.png"></a>
                 <a href="https://twitter.com/NAmsterdamvlog" target="_blank"><img src="{{staticPath}}/images/tw.png"></a>
                 <a href="http://instagram.com/n.amsterdam" target="_blank"><img src="{{staticPath}}/images/inst.png"></a>
             </div>
-        </div>
+
     </div>
     {% endblock %}
 </header>
@@ -53,9 +55,11 @@
     <div class="bottom-image">
         <img src="{{staticPath}}/images/bottom.png">
     </div>
+
     <div class="footer-links">
         <div class=" container">
-            <div class="row-fluid" style="padding-top: 50px;">
+            <div class="row-fluid hidden-xs hidden-sm hidden-md" style="padding-top: 50px;">
+
                 <div class="col-md-5">
                     <div><h3>Последнее видео на канале:</h3></div>
                     <div>
@@ -71,7 +75,7 @@
                     <!-- websta - web.stagram.com -->
 
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2 col-md-2">
                     <div class="footer-menu">
                         {% for m in menus %}
                         <div>
@@ -84,9 +88,10 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
+
         </div>
     </div>
+  </div>
     <div class="footer-copy">
         <div class="container">
             <div class="row" style="color: #fff; padding: 20px; font-size: 12px;">
