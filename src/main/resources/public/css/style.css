@@ -15,21 +15,77 @@ body {
     box-shadow: none;
     -webkit-box-shadow: none;
     border-bottom: 2px solid #1abc9c;
+
 }
 
+/* Landscape - телефоны */
+@media (max-width: 480px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:0%}
+    #nav-container-logo-test{width:100%;}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6; }
+}
+
+/* От ландшафтного экрана телефона до потретного планшета */
+@media (max-width: 767px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:15%}
+    #nav-container-logo-test{width:100%;}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+/* От портретного планшета до ландшафтного экрана и настольных дисплеев */
+@media (min-width: 768px) and (max-width: 979px) {   #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:20%}
+    #nav-container-logo-test{width:100%;}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6; }
+
+}
+@media (min-width: 979px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white.png') no-repeat; width:100%;margin-left:10%}
+    #nav-container-logo-test{width:100%;}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+/* Большой дисплей */
+@media (min-width: 1200px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white.png') no-repeat; width:100%;margin-left:25%}
+    #nav-container-logo-test{width:100%;}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+
+}
 .big-image {
     background-image: url('/images/main-bg.jpg');
     min-height: 600px;
     height: 600px;
     margin-top: 130px;
     box-shadow: 0 5px 5px #aaa;
+    width:100%;
 }
+
 
 .big-image h1 {
     color: #fff;
     font-size: 38px;
     padding-top: 8px;
 }
+
+    .big-image {
+        background-image: url('/images/main-bg.jpg');
+        min-height: 600px;
+        height: 600px;
+        margin-top: 130px;
+        box-shadow: 0 5px 5px #aaa;
+        width:50%;
+    }
+
+
+    .big-image h1 {
+        color: #fff;
+        font-size: 38px;
+        padding-top: 8px;
+
+    }
 
 .big-image .short-text {
     color: #fff;
@@ -54,12 +110,6 @@ body {
     margin-bottom: 20px;
 }
 
-.footer-links {
-    min-height: 400px;
-    height: 300px;
-    background-color: #95a5a6;
-}
-
 .bottom-image {
     position: relative;
     right: 100px;
@@ -72,9 +122,7 @@ body {
     background-color: #2c3e50;
 }
 
-.footer-links {
-    color: #fff;
-}
+
 
 time.icon {
     font-size: 1em; /* change icon size */

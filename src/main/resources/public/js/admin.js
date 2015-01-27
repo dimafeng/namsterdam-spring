@@ -96,11 +96,11 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
                 /**
                  * Start autosaving timer
                  */
-                globalService.startTimer(function () {
-                    $scope.draft();
-                });
+//                globalService.startTimer(function () {
+//                    $scope.draft();
+//                });
             } else {
-                globalService.stopTimer();
+//                globalService.stopTimer();
                 $scope.body = null;
             }
         });
