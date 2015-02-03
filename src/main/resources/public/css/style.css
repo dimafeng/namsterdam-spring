@@ -18,6 +18,57 @@ body {
 
 }
 
+/* Landscape - телефоны */
+@media (max-width: 480px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:0%}
+
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6; }
+}
+
+/* От ландшафтного экрана телефона до потретного планшета */
+@media (max-width: 767px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:15%}
+
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+/* От портретного планшета до ландшафтного экрана и настольных дисплеев */
+@media (min-width: 768px) and (max-width: 979px) {   #nav-logo-namsterdam-test {background: url('/images/logo-white-480.png') no-repeat; width:100%;margin-left:20%}
+
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6; }
+
+}
+@media (min-width: 979px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white.png') no-repeat; width:100%;margin-left:10%}
+
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+/* Большой дисплей */
+@media (min-width: 1200px) {  #nav-logo-namsterdam-test {background: url('/images/logo-white.png') no-repeat; width:100%;margin-left:23%}
+    .footer-links {  min-height:400px;
+        color: #fff;  background-color: #95a5a6;}
+}
+
+
+}
+.big-image {
+    background-image: url('/images/main-bg.jpg');
+    min-height: 600px;
+    height: 600px;
+    margin-top: 130px;
+    box-shadow: 0 5px 5px #aaa;
+    width:100%;
+}
+
+
+.big-image h1 {
+    color: #fff;
+    font-size: 38px;
+    padding-top: 8px;
+}
+
 .big-image {
     background-image: url('/images/main-bg.jpg');
     min-height: 600px;
@@ -60,11 +111,9 @@ body {
 
 .bottom-image {
     position: relative;
-    right: 400px;
+    right: 100px;
     float: right;
-    top: -610px;
-    width: 0px;
-    height: 0px;
+    top: -210px;
 }
 
 .footer-copy {

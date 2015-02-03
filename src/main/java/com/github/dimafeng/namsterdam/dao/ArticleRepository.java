@@ -18,6 +18,11 @@ public interface ArticleRepository extends MongoRepository<Article, String>, Art
     @Query(value = "{'display' : ?0 }")
     Page<Article> findAllByDisplay(boolean display, Pageable pageSpecification);
 
+    Long countByDisplay(boolean display);
+
     @Query(value = "{ categoryList: { $elemMatch: { $id: ?0 } } }")
     Page<Article> findByCategory(ObjectId categoryId, Pageable pageSpecification);
+
+    @Query(value = "{ categoryList: { $elemMatch: { $id: ?0 } } }", count = true)
+    Long countByCategory(ObjectId categoryId);
 }
