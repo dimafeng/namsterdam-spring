@@ -5,6 +5,7 @@ import com.github.dimafeng.namsterdam.dao.CategoryRepository;
 import com.github.dimafeng.namsterdam.dao.MenuRepository;
 import com.github.dimafeng.namsterdam.dao.UserRepository;
 import com.github.dimafeng.namsterdam.model.Article;
+import com.github.dimafeng.namsterdam.model.Category;
 import com.github.dimafeng.namsterdam.model.Menu;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -21,15 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class IndexController {
 
     static final Logger log = LoggerFactory.getLogger(IndexController.class);
-
-    private static final int ARTICLE_COUNT = 20;
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -45,23 +44,12 @@ public class IndexController {
 
     @RequestMapping("/")
     @MenuConsumer
-    public String showIndex(@RequestParam(required = false) Integer page ,Model model) {
+    public String showIndex(Model model) {
 
-        Pageable pageSpecification = new PageRequest(page == null ? 0 : page, ARTICLE_COUNT, new Sort(Sort.Direction.DESC, "displayDate"));
+        Pageable pageSpecification = new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"));
 
         Page<Article> articlePage = articleRepository.findAllByDisplay(true, pageSpecification);
-        Long count = articleRepository.countByDisplay(true);
-        int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
-        List<Integer> list = new ArrayList<>(pageCount);
 
-        for (int i=0;i<=pageCount;i++)
-         list.add(i);
-
-        model.addAttribute("maxPage",list.size());
-        model.addAttribute("nextPage",page == null ? 0 : page+1);
-        model.addAttribute("page",page == null ? 0 : page);
-        model.addAttribute("previousPage",page == null ? 0 : page-1);
-        model.addAttribute("pageCount", list);
         model.addAttribute("articles", articlePage.getContent());
 
         return "index";
@@ -88,28 +76,11 @@ public class IndexController {
 
     @RequestMapping("/category/{categoryName}")
     @MenuConsumer
-    public String category(@PathVariable("categoryName") String categoryName,@RequestParam(required = false) Integer page, Model model) {
-        Pageable pageSpecification = new PageRequest(page==null?0:page, 20);
+    public String category(@PathVariable("categoryName") String categoryName, Model model) {
+        Pageable pageSpecification = new PageRequest(0, 10);
 
         Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), pageSpecification);
-
-
-        Long count = articleRepository.countByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()));
-        int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
-        List<Integer> list = new ArrayList<>(pageCount);
-
-        for (int i=0;i<=pageCount;i++)
-            list.add(i);
-
-        model.addAttribute("maxPage",list.size());
-        model.addAttribute("nextPage",page == null ? 0 : page+1);
-        model.addAttribute("page",page == null ? 0 : page);
-        model.addAttribute("previousPage",page == null ? 0 : page-1);
-        model.addAttribute("pageCount", list);
-
-
         model.addAttribute("articles", articlePage.getContent());
-
 
         return "index";
     }
