@@ -45,9 +45,25 @@
         </div>
     </article>
     {% endfor %}
-
 </section>
+<div style="text-align:center;">
+    <div class="btn-group" role="group" aria-label="..." style="">
+        {% if (maxPage>0) %}
 
+        <a class="btn btn-default" {% if (page==0) %}disabled="disabled"{% endif %} align="center"
+        href="http://localhost:8080/?page={{previousPage}}"><</a>
+
+        {% for a in pageCount %}
+        <a class="btn btn-default {% if (a==page) %}active{% endif %}" align="center"
+           href="http://localhost:8080/?page={{a}}">{{a+1}}</a>
+        {% endfor %}
+
+        <a class="btn btn-default" {% if (page+1==maxPage) %}disabled="disabled"{% endif %} align="center"
+        href="http://localhost:8080/?page={{nextPage}}">></a>
+
+        {% endif %}
+    </div>
+</div>
 <script src="/js/vendor/pinterest_grid.js"></script>
 <script>
     $(function () {
