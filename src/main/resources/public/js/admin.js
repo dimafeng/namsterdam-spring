@@ -93,18 +93,17 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
                 $scope.previewHTML = null;
                 $scope.body = selectedArticle.body;
 
+  
                 /**
                  * Start autosaving timer
                  */
-                globalService.startTimer(function () {
-                    $scope.draft();
-                });
+//                globalService.startTimer(function () {
+//                    $scope.draft();
+//                });
             } else {
-                globalService.stopTimer();
+//                globalService.stopTimer();
                 $scope.body = null;
             }
-        });
-
         $scope.init = function () {
             Article.query(function (articles) {
                 $scope.articles = articles;
