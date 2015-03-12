@@ -1,13 +1,7 @@
 package com.github.dimafeng.namsterdam.controller;
 
-import com.github.dimafeng.namsterdam.dao.ArticleRepository;
-import com.github.dimafeng.namsterdam.dao.MenuRepository;
-import com.github.dimafeng.namsterdam.dao.PropertyRepository;
-import com.github.dimafeng.namsterdam.dao.UserRepository;
-import com.github.dimafeng.namsterdam.model.Article;
-import com.github.dimafeng.namsterdam.model.Menu;
-import com.github.dimafeng.namsterdam.model.Property;
-import com.github.dimafeng.namsterdam.model.User;
+import com.github.dimafeng.namsterdam.dao.*;
+import com.github.dimafeng.namsterdam.model.*;
 import com.github.dimafeng.namsterdam.service.HTMLService;
 import com.github.dimafeng.namsterdam.service.MarkdownService;
 import com.github.dimafeng.namsterdam.service.UserService;
@@ -17,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Files;
@@ -56,6 +51,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ImageRepository imageRepository;
 
     @RequestMapping("/")
     public String index() {
@@ -120,6 +118,15 @@ public class AdminController {
     public Article draftArticles(@PathVariable("articleId") String id, @RequestBody Article article, Authentication authentication) throws Exception {
         article.setId(id);
         return updateArticle(article, authentication, false);
+    }
+
+    @RequestMapping(value = "/articles/{articleId}/uploadImage", method = RequestMethod.POST)
+    @ResponseBody
+    public void uploadImage(@PathVariable("articleId") String id, @RequestParam("file") MultipartFile file) throws Exception {
+        Image image = new Image();
+        image.setData(file.getBytes());
+        image.setArticleId(id);
+        imageRepository.save(image);
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.POST)

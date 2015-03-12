@@ -23,7 +23,9 @@ dependencies {
             'org.springframework.security:spring-security-web:3.2.4.RELEASE',
             'org.springframework.security:spring-security-config:3.2.4.RELEASE',
             'org.slf4j:slf4j-nop:1.7.7',
-            'net.java.dev.rome:rome:1.0.0'
+            'net.java.dev.rome:rome:1.0.0',
+            'commons-fileupload:commons-fileupload:1.2.1',
+            'commons-io:commons-io:2.4'
     )
 
     compile('com.lyncode:jtwig-spring:3.0.1') {

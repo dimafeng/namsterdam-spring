@@ -1,4 +1,4 @@
-angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
+angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 'angularFileUpload'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -69,13 +69,17 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             return $scope.selectedItem != null;
         }
     })
-    .controller('ArticlesCtrl', function ($scope, $resource, $http, globalService) {
+    .controller('ArticlesCtrl', function ($scope, $resource, $http, globalService, FileUploader) {
 
         var Article = $resource('/admin/articles/:id', {id: '@id'}, {
             'draft': { url: '/admin/articles/:id/draft', method: 'POST' }
         });
         var Category = $resource('/admin/categories/:id', {id: '@id'});
 
+        $scope.uploader = new FileUploader({
+            url: '/admin/articles/uploadImage'
+        });
+        
         $scope.articles = [];
         $scope.selectedArticle = null;
 
@@ -93,7 +97,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
                 $scope.previewHTML = null;
                 $scope.body = selectedArticle.body;
 
-  
+
                 /**
                  * Start autosaving timer
                  */
@@ -104,6 +108,8 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
 //                globalService.stopTimer();
                 $scope.body = null;
             }
+        });
+        
         $scope.init = function () {
             Article.query(function (articles) {
                 $scope.articles = articles;
@@ -119,6 +125,7 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize'])
             Article.get({id: article.id}, function (article) {
                 $scope.selectedArticle = article;
                 $scope.message = undefined;
+                $scope.uploader.url = '/admin/articles/'+article.id+'/uploadImage';
                 try {
                     $scope.category = article.categoryList[0].id;
                 } catch (e) {
