@@ -86,8 +86,18 @@
                          style="background: #eee;border: 1px dashed #aaa;padding: 20px;">
                     </div>
 
-                    <h3>Images</h3>
+                    <h2>Images</h2>
 
+                    <div>
+                        <table>
+                            <tr ng-repeat="image in images">
+                                <td><img style="width: 100px;" src="/admin/image/{{image.id}}.jpg"></td>
+                                <td>{{image.id}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <h3>Upload</h3>
                     <div class="container-fluid">
                         <div class="row">
                             <!-- Drop area -->

@@ -1,6 +1,8 @@
 package com.github.dimafeng.namsterdam.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -8,8 +10,13 @@ public class Image {
     @Id
     private String id;
 
+    @JsonIgnore
     private byte[] data;
 
+    @JsonIgnore
+    private byte[] dataJPG;
+
+    @Indexed
     private String articleId;
 
     public String getId() {
@@ -26,6 +33,14 @@ public class Image {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public byte[] getDataJPG() {
+        return dataJPG;
+    }
+
+    public void setDataJPG(byte[] dataJPG) {
+        this.dataJPG = dataJPG;
     }
 
     public String getArticleId() {

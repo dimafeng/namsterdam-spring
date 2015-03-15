@@ -2,6 +2,7 @@ package com.github.dimafeng.namsterdam.config;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import org.im4java.core.ConvertCmd;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.*;
@@ -40,6 +41,12 @@ public class AppConfig extends AbstractMongoConfiguration {
         return new MongoClient(databaseServer);
     }
 
+//    @Bean
+//    public ConvertCmd convertCmd()
+//    {
+//        return new ConvertCmd();
+//    }
+    
     @Bean
     public Markdown markdownProcessor() {
         return new Markdown();

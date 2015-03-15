@@ -82,7 +82,8 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         
         $scope.articles = [];
         $scope.selectedArticle = null;
-
+        $scope.images = [];
+        
         $scope.allCategories;
         $scope.category = null;
         $scope.tags;
@@ -125,12 +126,16 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
             Article.get({id: article.id}, function (article) {
                 $scope.selectedArticle = article;
                 $scope.message = undefined;
-                $scope.uploader.url = '/admin/articles/'+article.id+'/uploadImage';
+                $scope.uploader.url = '/admin/articles/'+article.id+'/images';
                 try {
                     $scope.category = article.categoryList[0].id;
                 } catch (e) {
                     $scope.category = null;
                 }
+
+                $http.get('/admin/articles/'+article.id+'/images').success(function(images) {
+                    $scope.images = images;
+                });
             });
         };
 
