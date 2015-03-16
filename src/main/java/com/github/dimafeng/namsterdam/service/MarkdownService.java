@@ -12,7 +12,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,8 +26,40 @@ public class MarkdownService {
     public static final Pattern MAP_PATTERN = Pattern.compile("(map\\{([^\\}]*?)\\})");
     public static final Pattern FLICKR_PATTERN = Pattern.compile("(fl\\{([^\\}]*?)\\})");
 
+    public static final Pattern SLIDER_PATTERN = Pattern.compile("(img\\{([^\\}]*?)\\})");
+
     @Autowired
     private Markdown markdown;
+
+    public String processSliders(String body) throws Exception {
+        String result = body;
+
+        Matcher m = SLIDER_PATTERN.matcher(body);
+        while (m.find()) {
+            String images = m.group(2);
+
+            StringBuilder sb = new StringBuilder();
+
+            if (images.contains(",")) {
+                List<String> imagesList = Arrays.asList(images.split(","));
+                sb.append("<div class=\"article-slider\">");
+                imagesList.stream().forEach(e -> {
+                    sb.append("<a href=\"/images/1000/")
+                            .append(e)
+                            .append(".jpg\"><img src=\"/images/300/")
+                            .append(e)
+                            .append(".jpg\" alt=\"\" /></a>");
+                });
+                sb.append("</div>");
+            } else {
+                sb.append("<img class=\"article-image\" src=\"/images/1000/").append(images).append(".jpg\">");
+            }
+
+            result = result.replace(m.group(1), sb.toString());
+        }
+
+        return result;
+    }
 
     public String processInstagram(String body) throws Exception {
         String result = body;
@@ -112,6 +147,7 @@ public class MarkdownService {
         markdown.transform(new InputStreamReader(new ByteArrayInputStream(result.getBytes())), sw);
 
         result = sw.toString();
+        result = processSliders(result);
         result = processMap(result);
         result = processInstagram(result);
         result = processFlickr(result);

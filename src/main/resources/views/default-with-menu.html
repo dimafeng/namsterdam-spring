@@ -1,20 +1,25 @@
 {% extends "default.html" %}
 
 {% block header %}
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar" role="navigation">
     {% include 'fragments/menu.html' %}
 </div>
 <script>
-    $(function () {
-        $(window).scroll(function (e) {
-            var scrollPosition = $(window).scrollTop();
-            if (scrollPosition > 200) {
-                $('.navbar').slideUp();
-            } else {
-                $('.navbar').slideDown();
-            }
-        });
-    });
+//    $(function () {
+//        $(window).scroll(function (e) {
+//            var scrollPosition = $(window).scrollTop();
+//            if (scrollPosition > 200) {
+//                $('.navbar').slideUp();
+//            } else {
+//                $('.navbar').slideDown();
+//            }
+//        });
+//    });
 </script>
-<div style="margin-top: 168px;"></div>
 {% endblock %}
+
+{% block contentArea %}
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}      

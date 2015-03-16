@@ -1,12 +1,16 @@
 body {
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     font-size: 18px;
+    background-image: url("/images/main-bg.gif");
 }
+
 .nav li {
     margin-left: 10px;
     margin-right: 30px;
     font-weight: bold;
 }
+
 .navbar-default .navbar-nav > .active > a {
     background-color: #fff;
     background-image: none;
@@ -14,37 +18,56 @@ body {
     -webkit-box-shadow: none;
     border-bottom: 2px solid #1abc9c;
 }
+
 .big-image {
     background-image: url('/images/main-bg.jpg');
     min-height: 600px;
     height: 600px;
     margin-top: 130px;
     box-shadow: 0 5px 5px #aaa;
-    width:50%;
+    width: 50%;
 }
+
 .big-image h1 {
     color: #fff;
     font-size: 38px;
     padding-top: 8px;
 }
+
 .big-image .short-text {
     color: #fff;
 }
+
 .big-image .container {
     position: relative;
     top: 490px;
 }
+
 .navbar {
     margin-bottom: 0px;
 }
+
 .content {
     line-height: 35px;
-    font-size: 16px;
-    padding-top: 40px;
+    font-size: 19px;
+    background-color: #fff;
+    margin-top: 20px;
+    border-radius: 25px;
+    padding: 30px 25px 25px 35px;
 }
+
+.content-top-stick {
+    line-height: 35px;
+    font-size: 19px;
+    background-color: #fff;
+    border-radius: 0 0 25px 25px;
+    padding: 30px 25px 25px 35px;
+}
+
 .content p {
     margin-bottom: 20px;
 }
+
 .bottom-image {
     position: relative;
     right: 400px;
@@ -53,10 +76,12 @@ body {
     width: 0px;
     height: 0px;
 }
+
 .footer-copy {
     min-height: 70px;
     background-color: #2c3e50;
 }
+
 time.icon {
     font-size: 1em; /* change icon size */
     display: block;
@@ -68,6 +93,7 @@ time.icon {
     box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
     overflow: hidden;
 }
+
 time.icon * {
     display: block;
     width: 100%;
@@ -76,6 +102,7 @@ time.icon * {
     font-style: normal;
     text-align: center;
 }
+
 time.icon strong {
     position: absolute;
     top: 0;
@@ -84,39 +111,49 @@ time.icon strong {
     border-bottom: 1px dashed #95a5a6;
     box-shadow: 0 2px 0 #2c3e50;
 }
+
 time.icon em {
     position: absolute;
     bottom: 0.3em;
     color: #2c3e50;
 }
+
 time.icon span {
     font-size: 28px;
     padding-top: 40px;
     color: #2f2f2f;
 }
+
 .footer-menu {
     padding-top: 50px;
 }
+
 .footer-menu a {
     color: #fff;
 }
+
 #disqus_thread {
     margin-top: 40px;
 }
+
 .white-panel {
     position: absolute;
     background: white;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
+
 .white-panel h1 {
     font-size: 18px;
 }
+
 .white-panel h1 a {
     color: #A92733;
 }
+
 .white-panel a:hover {
     text-decoration: none;
 }
+
 .white-panel:hover {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
     margin-top: -5px;
@@ -125,6 +162,7 @@ time.icon span {
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
 .white-panel .category {
     /*position: absolute;
     top: 0;
@@ -140,12 +178,14 @@ time.icon span {
     /*text-shadow: 1px 1px #aaa;*/
     color: #777;
 }
+
 .article-image {
     width: 100%;
     text-align: center;
     padding-top: 40px;
     padding-bottom: 40px;
 }
+
 .article-image .description {
     width: 640px;
     margin: 0 auto;
@@ -154,21 +194,26 @@ time.icon span {
     font-size: 14px;
     color: #555;
 }
+
 .article-image .description800 {
     width: 800px;
 }
+
 .article-image .description640 {
     width: 640px;
 }
+
 .article-map-wrapper {
     position: absolute;
     left: 0;
     right: 0;
 }
+
 .article-map {
     margin-top: 20px;
     height: 500px;
 }
+
 .circular_ava {
     width: 50px;
     height: 50px;
@@ -179,18 +224,28 @@ time.icon span {
     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
     -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 }
+
 .article h1 {
     color: #666;
+    font-weight: bold;
 }
+
 .article-full-content .under-ava-block, .comments-and-date {
     font-weight: bolder;
     color: #999;
     font-size: 12px;
 }
+
 .article-full-content .under-ava-block a, .comments-and-date a {
     color: #999;
 }
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     background: none;
 }
-.footer-links {  min-height:400px;  color: #fff;  background-color: #95a5a6;}
+
+.footer-links {
+    min-height: 400px;
+    color: #fff;
+    background: #95a5a6;
+}

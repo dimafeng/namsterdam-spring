@@ -6,6 +6,7 @@ import com.github.dimafeng.namsterdam.dao.MenuRepository;
 import com.github.dimafeng.namsterdam.dao.UserRepository;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
+import com.github.dimafeng.namsterdam.service.ImageService;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +45,9 @@ public class IndexController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ImageService imageService;
+    
     @RequestMapping("/")
     @MenuConsumer
     public String showIndex(@RequestParam(required = false) Integer page ,Model model) {
@@ -145,6 +150,12 @@ public class IndexController {
         response.sendRedirect("http://feeds.feedburner.com/namsterdam");
     }
 
+    @RequestMapping(value = "/images/{size}/{imageId}.jpg", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public byte[] images(@PathVariable("size") int size, @PathVariable("imageId") String id) throws Exception {
+        return imageService.getImage(size, id);
+    }
+    
     @RequestMapping("/error500")
     public String error500() {
         return "errors/500";

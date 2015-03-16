@@ -120,6 +120,9 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
             Category.query(function (items) {
                 $scope.allCategories = items;
             });
+            
+            $scope.uploader.onCompleteItem = updateImages;
+            $scope.uploader.onCompleteAll = updateImages;
         };
 
         $scope.edit = function (article) {
@@ -132,13 +135,16 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
                 } catch (e) {
                     $scope.category = null;
                 }
-
-                $http.get('/admin/articles/'+article.id+'/images').success(function(images) {
-                    $scope.images = images;
-                });
+                updateImages();
             });
         };
 
+        var updateImages = function() {
+            $http.get('/admin/articles/'+$scope.selectedArticle.id+'/images').success(function(images) {
+                $scope.images = images;
+            });
+        }
+        
         $scope.showEditForm = function () {
             return $scope.selectedArticle != null;
         };

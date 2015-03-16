@@ -89,7 +89,7 @@
                     <h2>Images</h2>
 
                     <div>
-                        <table>
+                        <table class="table">
                             <tr ng-repeat="image in images">
                                 <td><img style="width: 100px;" src="/admin/image/{{image.id}}.jpg"></td>
                                 <td>{{image.id}}</td>
@@ -97,8 +97,8 @@
                         </table>
                     </div>
                     
-                    <h3>Upload</h3>
-                    <div class="container-fluid">
+                    <h3>Upload <button type="button" class="btn btn-success" ng-click="showUpload=(!showUpload)">+/-</button></h3>
+                    <div ng-show="showUpload" class="container-fluid">
                         <div class="row">
                             <!-- Drop area -->
                             <div class="col-md-5">
