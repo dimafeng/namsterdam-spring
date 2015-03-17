@@ -143,14 +143,19 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
             $http.get('/admin/articles/'+$scope.selectedArticle.id+'/images').success(function(images) {
                 $scope.images = images;
             });
-        }
+        };
         
         $scope.showEditForm = function () {
             return $scope.selectedArticle != null;
         };
 
         $scope.add = function () {
-            $scope.selectedArticle = new Article();
+            new Article().$save().then(function(article) {
+                $scope.edit(article);
+                Article.query(function (articles) {
+                    $scope.articles = articles;
+                });
+            });
         };
 
         $scope.publish = function () {

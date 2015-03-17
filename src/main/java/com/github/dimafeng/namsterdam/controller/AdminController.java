@@ -6,6 +6,7 @@ import com.github.dimafeng.namsterdam.service.HTMLService;
 import com.github.dimafeng.namsterdam.service.ImageService;
 import com.github.dimafeng.namsterdam.service.MarkdownService;
 import com.github.dimafeng.namsterdam.service.UserService;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -154,6 +155,9 @@ public class AdminController {
     @RequestMapping(value = "/articles", method = RequestMethod.POST)
     @ResponseBody
     public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
+        if(Strings.isNullOrEmpty(article.getTitle())) {
+            article.setTitle("New Article");
+        }
         return updateArticle(article, authentication, true);
     }
 
@@ -162,7 +166,7 @@ public class AdminController {
             article.setUser(userRepository.findByEmail(authentication.getName()));
         }
 
-        if (publish) {
+        if (publish && !Strings.isNullOrEmpty(article.getBody())) {
             article.setBodyHTML(markdownService.processALL(article.getBody()));
             article.setUpdateDate(new Date());
         }
@@ -171,7 +175,9 @@ public class AdminController {
             article.setCreationDate(new Date());
         }
         article.setUrlTitle(htmlService.translit(article.getTitle()));
-        article.setMainImage(htmlService.getFirstImage(article.getBodyHTML()));
+        if (article.getBodyHTML() != null) {
+            article.setMainImage(htmlService.getFirstImage(article.getBodyHTML()));
+        }
         if (article.getDisplayDate() == null) {
             article.setDisplayDate(new Date());
         }
