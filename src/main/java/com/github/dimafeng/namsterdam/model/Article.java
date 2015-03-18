@@ -24,7 +24,10 @@ public class Article implements Model {
     private boolean display;
     @Indexed
     private String urlTitle;
-    private String mainImage;
+    private String gridImageId;
+    private String mainImageId;
+    private int gridImageWidth;
+    private int gridImageHeight;
 
     @Indexed
     @DBRef
@@ -110,14 +113,6 @@ public class Article implements Model {
         this.urlTitle = urlTitle;
     }
 
-    public String getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
-
     public String getSmallText() {
         return smallText;
     }
@@ -158,6 +153,43 @@ public class Article implements Model {
         this.views = views;
     }
 
+    public String getGridImageId() {
+        return gridImageId;
+    }
+
+    public void setGridImageId(String gridImageId) {
+        this.gridImageId = gridImageId;
+    }
+
+    public String getMainImageId() {
+        return mainImageId;
+    }
+
+    public void setMainImageId(String mainImageId) {
+        this.mainImageId = mainImageId;
+    }
+
+    public int getGridImageWidth() {
+        return gridImageWidth;
+    }
+
+    public void setGridImageWidth(int gridImageWidth) {
+        this.gridImageWidth = gridImageWidth;
+    }
+
+    public int getGridImageHeight() {
+        return gridImageHeight;
+    }
+
+    public void setGridImageHeight(int gridImageHeight) {
+        this.gridImageHeight = gridImageHeight;
+    }
+
+    @JsonIgnore
+    public boolean isShouldHaveBackgroudOnGrid() {
+        return 1.2 * gridImageWidth < gridImageHeight;
+    }
+    
     @JsonIgnore
     public boolean isHasCategory() {
         return categoryList != null && !categoryList.isEmpty();

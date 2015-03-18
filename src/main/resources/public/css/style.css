@@ -168,7 +168,6 @@ time.icon span {
     top: 0;
     left: 0;*/
     margin: 0 10px 0 10px;
-    background-color: #fff;
     font-size: 12px;
     /*padding: 0 5px 0 5px;
     border-radius: 5px;
@@ -240,6 +239,12 @@ time.icon span {
     color: #999;
 }
 
+.filled .comments-and-date a,
+.filled .comments-and-date,
+.white-panel .filled .category  {
+    color: #eee;
+}
+
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     background: none;
 }
@@ -248,4 +253,7 @@ time.icon span {
     min-height: 400px;
     color: #fff;
     background: #95a5a6;
+}
+.white-panel .filled a {
+    color: #fff;
 }

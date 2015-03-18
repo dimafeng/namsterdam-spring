@@ -90,9 +90,17 @@
 
                     <div>
                         <table class="table">
+                            <tr>
+                                <td></td>
+                                <td>Identifier</td>
+                                <td>Grid pic</td>
+                                <td>Main pic</td>
+                            </tr>
                             <tr ng-repeat="image in images">
                                 <td><img style="width: 100px;" src="/admin/image/{{image.id}}.jpg"></td>
                                 <td>{{image.id}}</td>
+                                <td><input type="checkbox" ng-checked="isGridImage(image)" ng-click="setGridImage(image)"/></td>
+                                <td><input type="checkbox" ng-checked="isMainImage(image)" ng-click="setMainImage(image)"/></td>
                             </tr>
                         </table>
                     </div>

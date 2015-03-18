@@ -175,9 +175,14 @@ public class AdminController {
             article.setCreationDate(new Date());
         }
         article.setUrlTitle(htmlService.translit(article.getTitle()));
-        if (article.getBodyHTML() != null) {
-            article.setMainImage(htmlService.getFirstImage(article.getBodyHTML()));
+        
+        if(article.getGridImageId()!=null)
+        {
+            int[] size = imageService.getSize(article.getGridImageId());
+            article.setGridImageWidth(size[0]);
+            article.setGridImageHeight(size[1]);
         }
+        
         if (article.getDisplayDate() == null) {
             article.setDisplayDate(new Date());
         }

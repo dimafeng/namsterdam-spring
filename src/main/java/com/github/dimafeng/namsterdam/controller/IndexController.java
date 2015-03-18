@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class IndexController {
@@ -47,10 +48,10 @@ public class IndexController {
 
     @Autowired
     private ImageService imageService;
-    
+
     @RequestMapping("/")
     @MenuConsumer
-    public String showIndex(@RequestParam(required = false) Integer page ,Model model) {
+    public String showIndex(@RequestParam(required = false) Integer page, Model model) {
 
         Pageable pageSpecification = new PageRequest(page == null ? 0 : page, ARTICLE_COUNT, new Sort(Sort.Direction.DESC, "displayDate"));
 
@@ -59,13 +60,13 @@ public class IndexController {
         int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
         List<Integer> list = new ArrayList<>(pageCount);
 
-        for (int i=0;i<=pageCount;i++)
-         list.add(i);
+        for (int i = 0; i <= pageCount; i++)
+            list.add(i);
 
-        model.addAttribute("maxPage",list.size());
-        model.addAttribute("nextPage",page == null ? 0 : page+1);
-        model.addAttribute("page",page == null ? 0 : page);
-        model.addAttribute("previousPage",page == null ? 0 : page-1);
+        model.addAttribute("maxPage", list.size());
+        model.addAttribute("nextPage", page == null ? 0 : page + 1);
+        model.addAttribute("page", page == null ? 0 : page);
+        model.addAttribute("previousPage", page == null ? 0 : page - 1);
         model.addAttribute("pageCount", list);
         model.addAttribute("articles", articlePage.getContent());
 
@@ -93,8 +94,8 @@ public class IndexController {
 
     @RequestMapping("/category/{categoryName}")
     @MenuConsumer
-    public String category(@PathVariable("categoryName") String categoryName,@RequestParam(required = false) Integer page, Model model) {
-        Pageable pageSpecification = new PageRequest(page==null?0:page, 20);
+    public String category(@PathVariable("categoryName") String categoryName, @RequestParam(required = false) Integer page, Model model) {
+        Pageable pageSpecification = new PageRequest(page == null ? 0 : page, 20);
 
         Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), pageSpecification);
 
@@ -103,13 +104,13 @@ public class IndexController {
         int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
         List<Integer> list = new ArrayList<>(pageCount);
 
-        for (int i=0;i<=pageCount;i++)
+        for (int i = 0; i <= pageCount; i++)
             list.add(i);
 
-        model.addAttribute("maxPage",list.size());
-        model.addAttribute("nextPage",page == null ? 0 : page+1);
-        model.addAttribute("page",page == null ? 0 : page);
-        model.addAttribute("previousPage",page == null ? 0 : page-1);
+        model.addAttribute("maxPage", list.size());
+        model.addAttribute("nextPage", page == null ? 0 : page + 1);
+        model.addAttribute("page", page == null ? 0 : page);
+        model.addAttribute("previousPage", page == null ? 0 : page - 1);
         model.addAttribute("pageCount", list);
 
 
@@ -152,10 +153,12 @@ public class IndexController {
 
     @RequestMapping(value = "/images/{size}/{imageId}.jpg", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
-    public byte[] images(@PathVariable("size") int size, @PathVariable("imageId") String id) throws Exception {
-        return imageService.getImage(size, id);
+    public byte[] images(@PathVariable("size") int size,
+                         @PathVariable("imageId") String id,
+                         @RequestParam(required = false) Boolean gridImage) throws Exception {
+        return imageService.getImage(size, id, gridImage == null ? false : gridImage);
     }
-    
+
     @RequestMapping("/error500")
     public String error500() {
         return "errors/500";

@@ -191,6 +191,22 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
             $scope.opened = true;
         };
 
+        $scope.isGridImage = function(image) {
+            return $scope.selectedArticle.gridImageId == image.id;
+        };
+
+        $scope.isMainImage = function(image) {
+            return $scope.selectedArticle.mainImageId == image.id;
+        };
+
+        $scope.setGridImage = function(image) {
+            $scope.selectedArticle.gridImageId = image.id;
+        };
+
+        $scope.setMainImage = function(image) {
+            $scope.selectedArticle.mainImageId = image.id;
+        };
+        
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
