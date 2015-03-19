@@ -136,48 +136,6 @@ time.icon span {
     margin-top: 40px;
 }
 
-.white-panel {
-    position: absolute;
-    background: white;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.white-panel h1 {
-    font-size: 18px;
-}
-
-.white-panel h1 a {
-    color: #A92733;
-}
-
-.white-panel a:hover {
-    text-decoration: none;
-}
-
-.white-panel:hover {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-    margin-top: -5px;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-
-.white-panel .category {
-    /*position: absolute;
-    top: 0;
-    left: 0;*/
-    margin: 0 10px 0 10px;
-    font-size: 12px;
-    /*padding: 0 5px 0 5px;
-    border-radius: 5px;
-    opacity: 0.7;
-    filter: alpha(opacity=70);*/
-    font-weight: bold;
-    /*text-shadow: 1px 1px #aaa;*/
-    color: #777;
-}
-
 .article-image {
     width: 100%;
     text-align: center;
@@ -230,19 +188,12 @@ time.icon span {
 }
 
 .article-full-content .under-ava-block, .comments-and-date {
-    font-weight: bolder;
     color: #999;
     font-size: 12px;
 }
 
 .article-full-content .under-ava-block a, .comments-and-date a {
     color: #999;
-}
-
-.filled .comments-and-date a,
-.filled .comments-and-date,
-.white-panel .filled .category  {
-    color: #eee;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
@@ -254,6 +205,45 @@ time.icon span {
     color: #fff;
     background: #95a5a6;
 }
+
+.white-panel {
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    background: white;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.white-panel h1 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.white-panel a,
+.white-panel .full-name{
+    color: #777;
+}
+
+.filled .comments-and-date a,
+.filled .comments-and-date,
+.white-panel .filled .category,
+.white-panel .filled .full-name,
 .white-panel .filled a {
-    color: #fff;
+    color: #eee;
+}
+
+.white-panel .full-name {
+    font-size: 14px;
+}
+
+.white-panel a:hover {
+    text-decoration: none;
+}
+
+.white-panel:hover {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    margin-top: -5px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }

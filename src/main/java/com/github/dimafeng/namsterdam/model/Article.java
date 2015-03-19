@@ -1,5 +1,6 @@
 package com.github.dimafeng.namsterdam.model;
 
+import com.google.common.base.Strings;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -187,9 +188,15 @@ public class Article implements Model {
 
     @JsonIgnore
     public boolean isShouldHaveBackgroudOnGrid() {
-        return 1.2 * gridImageWidth < gridImageHeight;
+        return isHasGridImage() && (1.2 * gridImageWidth < gridImageHeight);
     }
-    
+
+    @JsonIgnore
+    public boolean isHasGridImage() {
+        return !Strings.isNullOrEmpty(gridImageId);
+    }
+
+
     @JsonIgnore
     public boolean isHasCategory() {
         return categoryList != null && !categoryList.isEmpty();
