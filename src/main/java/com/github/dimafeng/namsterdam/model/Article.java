@@ -206,4 +206,9 @@ public class Article implements Model {
     public Category getFirstCategory() {
         return isHasCategory() ? categoryList.iterator().next() : null;
     }
+
+    @JsonIgnore
+    public boolean isHasMainImage() {
+        return !Strings.isNullOrEmpty(mainImageId);
+    }
 }

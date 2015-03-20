@@ -4,8 +4,17 @@
 Новый Амстердам - {{article.title}}
 {% endblock %}
 
-{% block content %}
+{% block bigImage %}
+{% if (article.hasMainImage) %}
+<div style="background: url('/images/1000/{{article.mainImageId}}.jpg?gridImage=true'); 
+width: 100%; height: 600px;border-radius: 25px 25px 0 0;
+background-size: cover;">
 
+</div>
+{% endif %}
+{% endblock %}        
+        
+{% block content %}
 <div class="row article-full-content">
     <div class="col-md-3" style="text-align: center;">
         <div style="margin-top: 30px;">
