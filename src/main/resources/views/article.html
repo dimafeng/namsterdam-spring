@@ -7,54 +7,45 @@
 {% block bigImage %}
 {% if (article.hasMainImage) %}
 <div style="background: url('/images/1000/{{article.mainImageId}}.jpg?gridImage=true'); 
-width: 100%; height: 600px;border-radius: 25px 25px 0 0;
-background-size: cover;">
-
+width: 100%; height: 550px;border-radius: 25px 25px 0 0;
+background-size: cover;
+position: relative;">
+    <div class="article-header-and-info-white">
+        <h1 style="color: #fff">{{article.title}}</h1>
+        <div class="article-info">
+            <span class="author-name">{{article.user.fullName}}</span>
+            <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
+            &nbsp;
+            <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{article.views}}
+        </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}        
         
 {% block content %}
 <div class="row article-full-content">
-    <div class="col-md-3" style="text-align: center;">
-        <div style="margin-top: 30px;">
-            <img class="circular_ava" src="{{article.user.avaUrl}}">
-        <div class="under-ava-block" style="margin-top: 15px;">
-            {{article.user.fullName}}
-        </div>
-        <div class="under-ava-block" style="margin-top: -10px;">
-            <span class="glyphicon glyphicon-calendar" style="margin-right: 10px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
-            &nbsp;
-            <span class="glyphicon glyphicon-eye-open" style="margin-right: 10px;"></span>{{article.views}}
-        </div>
-        <div class="under-ava-block" style="margin-top: -10px;">
-            <span class="glyphicon glyphicon-comment" style="margin-right: 10px;"></span><a href="#disqus_thread"></a>
-            <script type="text/javascript">
-                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                var disqus_shortname = 'namsterdamus'; // required: replace example with your forum shortname
-
-                /* * * DON'T EDIT BELOW THIS LINE * * */
-                (function () {
-                    var s = document.createElement('script');
-                    s.async = true;
-                    s.type = 'text/javascript';
-                    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-                    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-                }());
-            </script>
-        </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                {% for t in article.tags %}
-                <span class="label label-default">{{t}}</span>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9 article">
+    <div class="col-md-12 article">
+        
+        {% if (article.hasMainImage==false) %}
+        <div class="article-header-and-info-grey">
         <h1>{{article.title}}</h1>
+            <div class="article-info">
+                    <span class="author-name">{{article.user.fullName}}</span>
+                    <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
+                    &nbsp;
+                    <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{article.views}}
+                </div>
+        </div>
+        {% endif %}
+        
         {{article.bodyHTML}}
+        
+        <div>
+            {% for t in article.tags %}
+            <span class="label label-default">{{t}}</span>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

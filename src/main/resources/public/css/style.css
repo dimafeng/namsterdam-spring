@@ -191,15 +191,6 @@ time.icon span {
     padding: 20px;
 }
 
-.article-full-content .under-ava-block, .comments-and-date {
-    color: #999;
-    font-size: 12px;
-}
-
-.article-full-content .under-ava-block a, .comments-and-date a {
-    color: #999;
-}
-
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     background: none;
 }
@@ -250,4 +241,44 @@ time.icon span {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+}
+
+.article-header-and-info-grey,
+.article-header-and-info-grey h1 {
+    color: #777;
+}
+
+.article-header-and-info-white {
+    position: absolute;
+    bottom: 0;
+    padding: 40px;
+}
+
+.article h1 {
+    font-size: 46px;
+    
+}
+
+.comments-and-date {
+    font-size: 12px;
+}
+
+.article-header-and-info-white,
+.article-header-and-info-white h1 {
+    color: #fff;
+}
+
+.article-header-and-info-grey .article-info {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+
+.article-info {
+    font-size: 13px;
+}
+
+.author-name {
+    font-size: 15px;
+    font-weight: bold;
 }
