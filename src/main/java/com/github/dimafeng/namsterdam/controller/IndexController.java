@@ -97,7 +97,7 @@ public class IndexController {
     public String category(@PathVariable("categoryName") String categoryName, @RequestParam(required = false) Integer page, Model model) {
         Pageable pageSpecification = new PageRequest(page == null ? 0 : page, 20);
 
-        Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), pageSpecification);
+        Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), true, pageSpecification);
 
 
         Long count = articleRepository.countByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()));
