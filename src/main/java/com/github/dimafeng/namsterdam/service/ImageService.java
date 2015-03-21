@@ -2,6 +2,7 @@ package com.github.dimafeng.namsterdam.service;
 
 import com.github.dimafeng.namsterdam.dao.ImageRepository;
 import com.google.common.base.Preconditions;
+import org.im4java.core.CompositeCmd;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IMOperation;
 import org.im4java.process.Pipe;

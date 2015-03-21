@@ -1,9 +1,6 @@
 package com.github.dimafeng.namsterdam.controller;
 
-import com.github.dimafeng.namsterdam.dao.ArticleRepository;
-import com.github.dimafeng.namsterdam.dao.CategoryRepository;
-import com.github.dimafeng.namsterdam.dao.MenuRepository;
-import com.github.dimafeng.namsterdam.dao.UserRepository;
+import com.github.dimafeng.namsterdam.dao.*;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
 import com.github.dimafeng.namsterdam.service.ImageService;
@@ -42,6 +39,9 @@ public class IndexController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ViewCountRepository viewCountRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -80,7 +80,7 @@ public class IndexController {
         Article articlePage = articleRepository.findByUrlTitle(articleName);
         model.addAttribute("article", articlePage);
 
-        articleRepository.getAndIncViews(articlePage.getId());
+        model.addAttribute("viewCount", viewCountRepository.getAndIncViews(articlePage.getId()));
 
         return "article";
     }

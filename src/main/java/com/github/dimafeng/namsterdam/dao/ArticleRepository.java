@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ArticleRepository extends MongoRepository<Article, String>, ArticleRepositoryCustom {
+public interface ArticleRepository extends MongoRepository<Article, String> {
 
     Article findByUrlTitle(String urlTitle);
 

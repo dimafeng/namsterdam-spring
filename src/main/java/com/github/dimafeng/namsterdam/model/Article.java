@@ -39,8 +39,6 @@ public class Article implements Model {
 
     @DBRef
     private User user;
-    @Indexed
-    private Long views;
 
     public String getId() {
         return id;
@@ -144,14 +142,6 @@ public class Article implements Model {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
-    }
-
-    public Long getViews() {
-        return views;
-    }
-
-    public void setViews(Long views) {
-        this.views = views;
     }
 
     public String getGridImageId() {

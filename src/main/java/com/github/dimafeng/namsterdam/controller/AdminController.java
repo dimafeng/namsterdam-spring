@@ -64,6 +64,9 @@ public class AdminController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private ViewCountRepository viewCountRepository;
+
     @RequestMapping("/")
     public String index() {
         return "admin";
@@ -155,7 +158,7 @@ public class AdminController {
     @RequestMapping(value = "/articles", method = RequestMethod.POST)
     @ResponseBody
     public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
-        if(Strings.isNullOrEmpty(article.getTitle())) {
+        if (Strings.isNullOrEmpty(article.getTitle())) {
             article.setTitle("New Article");
         }
         return updateArticle(article, authentication, true);
@@ -175,14 +178,13 @@ public class AdminController {
             article.setCreationDate(new Date());
         }
         article.setUrlTitle(htmlService.translit(article.getTitle()));
-        
-        if(article.getGridImageId()!=null)
-        {
+
+        if (article.getGridImageId() != null) {
             int[] size = imageService.getSize(article.getGridImageId());
             article.setGridImageWidth(size[0]);
             article.setGridImageHeight(size[1]);
         }
-        
+
         if (article.getDisplayDate() == null) {
             article.setDisplayDate(new Date());
         }

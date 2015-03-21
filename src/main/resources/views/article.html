@@ -16,7 +16,7 @@ position: relative;">
             <span class="author-name">{{article.user.fullName}}</span>
             <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
             &nbsp;
-            <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{article.views}}
+            <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{viewCount}}
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@ position: relative;">
                     <span class="author-name">{{article.user.fullName}}</span>
                     <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
                     &nbsp;
-                    <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{article.views}}
+                    <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{viewCount}}
                 </div>
         </div>
         {% endif %}
