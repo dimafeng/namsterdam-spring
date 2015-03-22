@@ -9,9 +9,7 @@ import com.github.dimafeng.namsterdam.service.UserService;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -41,7 +38,7 @@ public class AdminController {
     private MenuRepository menuRepository;
 
     @Autowired
-    private ArticleRepository articleRepository;
+    private AbstractPostRepository abstractPostRepository;
 
     @Autowired
     private MarkdownService markdownService;
@@ -106,32 +103,6 @@ public class AdminController {
         menuRepository.delete(id);
     }
 
-    @RequestMapping(value = "/articles", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Article> articles() {
-        return articleRepository.findAll();
-    }
-
-    @RequestMapping(value = "/articles/{articleId}", method = RequestMethod.GET)
-    @ResponseBody
-    public Article articles(@PathVariable("articleId") String id) {
-        return articleRepository.findOne(id);
-    }
-
-    @RequestMapping(value = "/articles/{articleId}", method = RequestMethod.POST)
-    @ResponseBody
-    public Article saveUpdateArticles(@PathVariable("articleId") String id, @RequestBody Article article, Authentication authentication) throws Exception {
-        article.setId(id);
-        return updateArticle(article, authentication, true);
-    }
-
-    @RequestMapping(value = "/articles/{articleId}/draft", method = RequestMethod.POST)
-    @ResponseBody
-    public Article draftArticles(@PathVariable("articleId") String id, @RequestBody Article article, Authentication authentication) throws Exception {
-        article.setId(id);
-        return updateArticle(article, authentication, false);
-    }
-
     @RequestMapping(value = "/articles/{articleId}/images", method = RequestMethod.POST)
     @ResponseBody
     public void uploadImage(@PathVariable("articleId") String articleId,
@@ -143,65 +114,10 @@ public class AdminController {
         imageRepository.save(image);
     }
 
-    @RequestMapping(value = "/articles/{articleId}/images", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Image> getImagesForArticle(@PathVariable("articleId") String articleId) {
-        return imageRepository.findByArticleId(articleId);
-    }
-
     @RequestMapping(value = "/image/{imageId}.jpg", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public byte[] renderImage(@PathVariable("imageId") String imageId) {
         return imageRepository.findOne(imageId).getDataJPG();
-    }
-
-    @RequestMapping(value = "/articles", method = RequestMethod.POST)
-    @ResponseBody
-    public Article saveUpdateArticles(@RequestBody Article article, Authentication authentication) throws Exception {
-        if (Strings.isNullOrEmpty(article.getTitle())) {
-            article.setTitle("New Article");
-        }
-        return updateArticle(article, authentication, true);
-    }
-
-    private Article updateArticle(Article article, Authentication authentication, boolean publish) throws Exception {
-        if (article.getId() == null || article.getId().isEmpty() || article.getUser() == null) {
-            article.setUser(userRepository.findByEmail(authentication.getName()));
-        }
-
-        if (publish && !Strings.isNullOrEmpty(article.getBody())) {
-            article.setBodyHTML(markdownService.processALL(article.getBody()));
-            article.setUpdateDate(new Date());
-        }
-
-        if (article.getCreationDate() != null) {
-            article.setCreationDate(new Date());
-        }
-        article.setUrlTitle(htmlService.translit(article.getTitle()));
-
-        if (article.getGridImageId() != null) {
-            int[] size = imageService.getSize(article.getGridImageId());
-            article.setGridImageWidth(size[0]);
-            article.setGridImageHeight(size[1]);
-        }
-
-        if (article.getDisplayDate() == null) {
-            article.setDisplayDate(new Date());
-        }
-
-        return articleRepository.save(article);
-    }
-
-    @RequestMapping(value = "/articles/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void deleteArticles(@PathVariable("id") String id) {
-        articleRepository.delete(id);
-    }
-
-    @RequestMapping(value = "/articles/preview", method = RequestMethod.POST)
-    @ResponseBody
-    public String articlePreview(@RequestBody String text) throws Exception {
-        return markdownService.processALL(text);
     }
 
     @RequestMapping(value = "/property", method = RequestMethod.GET)

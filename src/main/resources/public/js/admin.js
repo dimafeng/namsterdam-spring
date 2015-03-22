@@ -9,6 +9,10 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
                 controller: 'ArticlesCtrl',
                 templateUrl: '/html/fragments/articles.html'
             })
+            .when('/videos', {
+                controller: 'VideosCtrl',
+                templateUrl: '/html/fragments/videos.html'
+            })
             .when('/users', {
                 controller: 'UsersCtrl',
                 templateUrl: '/html/fragments/users.html'
@@ -277,7 +281,49 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         $scope.showEditForm = function () {
             return !_.isUndefined($scope.selectedUser);
         }
-    }).controller('CategoriesCtrl', function ($scope, $resource) {
+    })
+    .controller('VideosCtrl', function ($scope, $resource) {
+
+        var Video = $resource('/admin/videos/:id', {id: '@id'});
+
+        $scope.selectedVideo = undefined;
+        $scope.videos = [
+        ];
+
+        var init = function () {
+            Video.query(function (videos) {
+                $scope.videos = videos;
+            });
+        };
+        init();
+
+        $scope.add = function () {
+            $scope.selectedVideo = new Video();
+        };
+
+        $scope.delete = function (video) {
+            video.$delete().then(function (res) {
+                init();
+            });
+        };
+
+        $scope.edit = function (video) {
+            Video.get({id: video.id}, function (video) {
+                $scope.selectedVideo = video;
+            });
+        };
+
+        $scope.save = function () {
+            $scope.selectedVideo.$save().then(function (res) {
+                init();
+            });
+        };
+
+        $scope.showEditForm = function () {
+            return !_.isUndefined($scope.selectedVideo);
+        }
+    })
+    .controller('CategoriesCtrl', function ($scope, $resource) {
 
         var Category = $resource('/admin/categories/:id', {id: '@id'});
 

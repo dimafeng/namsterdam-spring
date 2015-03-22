@@ -3,12 +3,13 @@ package com.github.dimafeng.namsterdam.controller.admin;
 import com.github.dimafeng.namsterdam.model.Model;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Secured("ROLE_ADMIN")
-public interface CRUDMapping<T extends Model> {
+public interface CRUDMapping<T extends Model, R extends T> {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
@@ -24,15 +25,15 @@ public interface CRUDMapping<T extends Model> {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseBody
-    default public T save(@PathVariable("id") String id, @RequestBody T item) throws Exception {
+    default public T save(@PathVariable("id") String id, @RequestBody R item, Authentication authentication) throws Exception {
         item.setId(id);
-        return saveUpdate(item);
+        return saveUpdate(item, authentication);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    default public T saveUpdate(@RequestBody T item) throws Exception {
-        processBeforeSave(item);
+    default public T saveUpdate(@RequestBody R item, Authentication authentication) throws Exception {
+        processBeforeSave(item, authentication);
         return getRepository().save(item);
     }
 
@@ -42,7 +43,7 @@ public interface CRUDMapping<T extends Model> {
         getRepository().delete(id);
     }
 
-    public void processBeforeSave(T item);
+    public void processBeforeSave(R item, Authentication authentication) throws Exception;
 
     public MongoRepository<T, String> getRepository();
 }

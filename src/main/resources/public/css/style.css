@@ -282,3 +282,7 @@ time.icon span {
     font-size: 15px;
     font-weight: bold;
 }
+
+p {
+    margin: 0 0 30px;
+}

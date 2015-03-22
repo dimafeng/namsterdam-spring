@@ -1,6 +1,7 @@
 package com.github.dimafeng.namsterdam.controller;
 
 import com.github.dimafeng.namsterdam.dao.*;
+import com.github.dimafeng.namsterdam.model.AbstractPost;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
 import com.github.dimafeng.namsterdam.service.ImageService;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class IndexController {
@@ -32,14 +32,14 @@ public class IndexController {
     private static final int ARTICLE_COUNT = 20;
 
     @Autowired
-    private ArticleRepository articleRepository;
+    private AbstractPostRepository abstractPostRepository;
 
     @Autowired
     private MenuRepository menuRepository;
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private ViewCountRepository viewCountRepository;
 
@@ -55,8 +55,8 @@ public class IndexController {
 
         Pageable pageSpecification = new PageRequest(page == null ? 0 : page, ARTICLE_COUNT, new Sort(Sort.Direction.DESC, "displayDate"));
 
-        Page<Article> articlePage = articleRepository.findAllByDisplay(true, pageSpecification);
-        Long count = articleRepository.countByDisplay(true);
+        Page<AbstractPost> articlePage = abstractPostRepository.findAllByDisplay(true, pageSpecification);
+        Long count = abstractPostRepository.countByDisplay(true);
         int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
         List<Integer> list = new ArrayList<>(pageCount);
 
@@ -77,12 +77,15 @@ public class IndexController {
     @MenuConsumer
     public String showArticle(@PathVariable("articleName") String articleName, Model model) {
 
-        Article articlePage = articleRepository.findByUrlTitle(articleName);
-        model.addAttribute("article", articlePage);
+        AbstractPost articlePage = abstractPostRepository.findByUrlTitle(articleName);
+        if (articlePage instanceof Article) {
+            model.addAttribute("article", articlePage);
 
-        model.addAttribute("viewCount", viewCountRepository.getAndIncViews(articlePage.getId()));
+            model.addAttribute("viewCount", viewCountRepository.getAndIncViews(articlePage.getId()));
 
-        return "article";
+            return "article";
+        }
+        throw new IllegalStateException();
     }
 
     @RequestMapping("/categories")
@@ -97,10 +100,10 @@ public class IndexController {
     public String category(@PathVariable("categoryName") String categoryName, @RequestParam(required = false) Integer page, Model model) {
         Pageable pageSpecification = new PageRequest(page == null ? 0 : page, 20);
 
-        Page<Article> articlePage = articleRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), true, pageSpecification);
+        Page<AbstractPost> articlePage = abstractPostRepository.findByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()), true, pageSpecification);
 
 
-        Long count = articleRepository.countByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()));
+        Long count = abstractPostRepository.countByCategory(new ObjectId(categoryRepository.findByUrlTitle(categoryName).getId()));
         int pageCount = Long.valueOf(count / ARTICLE_COUNT).intValue();
         List<Integer> list = new ArrayList<>(pageCount);
 
@@ -141,7 +144,7 @@ public class IndexController {
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("rssViewer");
-        mav.addObject("feedContent", articleRepository.findAllByDisplay(true, new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"))).getContent());
+        mav.addObject("feedContent", abstractPostRepository.findAllByDisplay(true, new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "displayDate"))).getContent());
 
         return mav;
     }

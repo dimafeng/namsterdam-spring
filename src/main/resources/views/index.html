@@ -27,7 +27,7 @@
 
         {% if(a.hasGridImage) %}
         <div>
-            <img style=" width: 100%;" src="/images/300/{{a.gridImageId}}.jpg">
+            <img style=" width: 100%;" src="{{a.gridImageUrl}}">
         </div>
         {% endif %}
 
@@ -60,16 +60,11 @@
 
     {% if (a.shouldHaveBackgroudOnGrid) %}
     <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'"
-             style="background-image: url('/images/300/{{a.gridImageId}}.jpg?gridImage=true');
+             style="background-image: url('{{a.gridImageUrl}}');
             height: {{260*a.gridImageHeight/a.gridImageWidth}}px;">
 
         <div style="height: {{260*a.gridImageHeight/a.gridImageWidth}}px;position:relative;" class="filled">
             <div style="position: absolute; bottom: 0;">
-                <!--{% if (a.hasCategory) %}-->
-                <!--<div class="category">-->
-                    <!--{{a.firstCategory.name}}-->
-                <!--</div>-->
-                <!--{% endif %}-->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 full-name">
