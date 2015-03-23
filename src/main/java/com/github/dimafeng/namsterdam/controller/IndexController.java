@@ -4,6 +4,7 @@ import com.github.dimafeng.namsterdam.dao.*;
 import com.github.dimafeng.namsterdam.model.AbstractPost;
 import com.github.dimafeng.namsterdam.model.Article;
 import com.github.dimafeng.namsterdam.model.Menu;
+import com.github.dimafeng.namsterdam.model.VideoPost;
 import com.github.dimafeng.namsterdam.service.ImageService;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -84,6 +85,10 @@ public class IndexController {
             model.addAttribute("viewCount", viewCountRepository.getAndIncViews(articlePage.getId()));
 
             return "article";
+        } else if (articlePage instanceof VideoPost) {
+            model.addAttribute("article", articlePage);
+
+            return "video";
         }
         throw new IllegalStateException();
     }

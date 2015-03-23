@@ -45,8 +45,6 @@ public class VideoPostController implements CRUDMapping<AbstractPost, VideoPost>
             video.setUser(userRepository.findByEmail(authentication.getName()));
         }
 
-        video.setBodyHTML("test");
-
         if (video.getCreationDate() != null) {
             video.setCreationDate(new Date());
         }
@@ -56,6 +54,9 @@ public class VideoPostController implements CRUDMapping<AbstractPost, VideoPost>
             video.setDisplayDate(new Date());
         }
         video.setDisplay(true);
+        video.setBodyHTML("<iframe class=\"youtube-video\" type=\"text/html\" width=\"640\" height=\"390\"\n" +
+                "  src=\"http://www.youtube.com/embed/"+video.getVideoId()+"\"" +
+                "  frameborder=\"0\"></iframe>");
     }
 
     @Override

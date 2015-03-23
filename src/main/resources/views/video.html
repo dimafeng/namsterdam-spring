@@ -1,0 +1,24 @@
+{% extends "article.html" %}
+
+{% block content %}
+<div class="row article-full-content">
+    <div class="col-md-12 article">
+
+        <div class="article-header-and-info-grey">
+            <h1>{{article.title}}</h1>
+        </div>
+
+        {{article.bodyHTML}}
+
+        <div>
+            {% for t in article.tags %}
+            <span class="label label-default">{{t}}</span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53de47c33f3a66cf"></script>
+
+{% endblock %}

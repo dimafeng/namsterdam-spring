@@ -12,35 +12,39 @@ background-size: cover;
 position: relative;">
     <div class="article-header-and-info-white">
         <h1 style="color: #fff">{{article.title}}</h1>
+
         <div class="article-info">
             <span class="author-name">{{article.user.fullName}}</span>
-            <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
+            <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate |
+            date("dd.MM.yyyy") }}
             &nbsp;
             <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{viewCount}}
         </div>
     </div>
 </div>
 {% endif %}
-{% endblock %}        
-        
+{% endblock %}
+
 {% block content %}
 <div class="row article-full-content">
     <div class="col-md-12 article">
-        
+
         {% if (article.hasMainImage==false) %}
         <div class="article-header-and-info-grey">
-        <h1>{{article.title}}</h1>
+            <h1>{{article.title}}</h1>
+
             <div class="article-info">
-                    <span class="author-name">{{article.user.fullName}}</span>
-                    <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate | date("dd.MM.yyyy") }}
-                    &nbsp;
-                    <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{viewCount}}
-                </div>
+                <span class="author-name">{{article.user.fullName}}</span>
+                <span class="glyphicon glyphicon-calendar" style="margin: 0 10px 0 20px;"></span>{{article.displayDate |
+                date("dd.MM.yyyy") }}
+                &nbsp;
+                <span class="glyphicon glyphicon-eye-open" style="margin: 0 10px 0 20px;"></span>{{viewCount}}
+            </div>
         </div>
         {% endif %}
-        
+
         {{article.bodyHTML}}
-        
+
         <div>
             {% for t in article.tags %}
             <span class="label label-default">{{t}}</span>
@@ -48,16 +52,6 @@ position: relative;">
         </div>
     </div>
 </div>
-
-<script>
-    $(function () {
-        $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
-        $( '.article-slider' ).jGallery({
-            browserHistory: false,
-            canChangeMode: false
-        });
-    });
-</script>
 
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53de47c33f3a66cf"></script>
@@ -87,9 +81,30 @@ position: relative;">
 {% endblock %}
 
 {% block description %}
-    {{article.smallText}}
+{{article.smallText}}
 {% endblock %}
 
 {% block keywords %}
-    {{article.tags|join(', ')}}
+{{article.tags|join(', ')}}
+{% endblock %}
+        
+{% block commonScript %}
+<script>
+    $(function () {
+        $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
+
+        $('.article-slider').jGallery({
+            browserHistory: false,
+            canChangeMode: false
+        });
+
+        var innerWidth = $('.article').innerWidth() - 20;
+        $('.youtube-video').css({width: innerWidth + 'px', height: (innerWidth * 9 / 16) + 'px'});
+
+        $(window).resize(function () {
+            var innerWidth = $('.article').innerWidth() - 20;
+            $('.youtube-video').css({width: innerWidth + 'px', height: (innerWidth * 9 / 16) + 'px'});
+        });
+    });
+</script>
 {% endblock %}
