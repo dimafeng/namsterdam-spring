@@ -35,6 +35,21 @@
                         </div>
                         <br>
 
+                        <div class="input-group">
+                            <span class="input-group-addon">Categories</span>
+                            <select class="form-control" ng-model="category">
+                                <option value="null">Select category</option>
+                                <option ng-repeat="cat in allCategories" value="{{cat.id}}">{{cat.name}}</option>
+                            </select>
+                        </div>
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">Tags</span>
+                            <input type="text" class="form-control" ng-model="tags">
+                        </div>
+                        <br>
+                        
                         <div style="margin-top: 20px;">
                             <button type="button" class="btn btn-success" ng-click="save()">
                                 <span class="glyphicon glyphicon-ok">Save</span>

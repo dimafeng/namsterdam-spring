@@ -269,6 +269,12 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         $scope.edit = function (user) {
             User.get({id: user.id}, function (user) {
                 $scope.selectedUser = user;
+                $scope.tags = $scope.selectedUser.tags == null ? '' : $scope.selectedUser.tags.join(',');
+                try {
+                    $scope.category = article.categoryList[0].id;
+                } catch (e) {
+                    $scope.category = null;
+                }
             });
         };
 
@@ -285,7 +291,12 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
     .controller('VideosCtrl', function ($scope, $resource) {
 
         var Video = $resource('/admin/videos/:id', {id: '@id'});
+        var Category = $resource('/admin/categories/:id', {id: '@id'});
 
+        $scope.allCategories;
+        $scope.category = null;
+        $scope.tags;
+        
         $scope.selectedVideo = undefined;
         $scope.videos = [
         ];
@@ -293,6 +304,9 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         var init = function () {
             Video.query(function (videos) {
                 $scope.videos = videos;
+            });
+            Category.query(function (items) {
+                $scope.allCategories = items;
             });
         };
         init();
@@ -314,6 +328,10 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         };
 
         $scope.save = function () {
+            $scope.selectedVideo.tags = $scope.tags.split(',');
+            $scope.selectedVideo.categoryList = $scope.category != null ? [
+                {id: $scope.category}
+            ] : [];
             $scope.selectedVideo.$save().then(function (res) {
                 init();
             });
