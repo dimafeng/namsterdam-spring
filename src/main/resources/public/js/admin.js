@@ -324,6 +324,12 @@ angular.module('admin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 
         $scope.edit = function (video) {
             Video.get({id: video.id}, function (video) {
                 $scope.selectedVideo = video;
+                try {
+                    $scope.category = video.categoryList[0].id;
+                    $scope.tags = video.tags == null ? '' : video.tags.join(',');
+                } catch (e) {
+                    $scope.category = null;
+                }
             });
         };
 
