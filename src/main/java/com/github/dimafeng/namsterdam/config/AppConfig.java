@@ -17,11 +17,11 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.tautua.markdownpapers.Markdown;
 
-@Import(PropertiesConfig.class)
+//@Import(PropertiesConfig.class)
 @Configuration
 @ComponentScan(basePackages = "com.github.dimafeng.namsterdam")
 @EnableMongoRepositories(basePackages = "com.github.dimafeng.namsterdam.dao")
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+//@EnableAspectJAutoProxy(proxyTargetClass = false)
 public class AppConfig extends AbstractMongoConfiguration {
 
     @Value("${mongo.db.name}")

@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-public class CustomAtomViewer extends AbstractAtomFeedView {
+public class CustomAtomViewer {}
+
+/*public class CustomAtomViewer extends AbstractAtomFeedView {
 
     @Override
     protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
@@ -57,4 +59,4 @@ public class CustomAtomViewer extends AbstractAtomFeedView {
         return entries;
 
     }
-}
+}*/
