@@ -1,27 +1,26 @@
 package com.github.dimafeng.namsterdam.controller;
 
+import com.github.dimafeng.namsterdam.model.AbstractPost;
 import com.github.dimafeng.namsterdam.model.Article;
-import com.sun.syndication.feed.atom.Content;
-import com.sun.syndication.feed.atom.Entry;
-import com.sun.syndication.feed.atom.Feed;
-import com.sun.syndication.feed.atom.Link;
+import com.rometools.rome.feed.atom.Content;
+import com.rometools.rome.feed.atom.Entry;
+import com.rometools.rome.feed.atom.Feed;
+import com.rometools.rome.feed.atom.Link;
 import org.springframework.web.servlet.view.feed.AbstractAtomFeedView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-public class CustomAtomViewer {}
-
-/*public class CustomAtomViewer extends AbstractAtomFeedView {
+public class CustomAtomViewer extends AbstractAtomFeedView {
 
     @Override
     protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
         feed.setId("http://namsterdam.us");
         feed.setTitle("Новый Амстердам");
         @SuppressWarnings("unchecked")
-        List<Article> listContent = (List<Article>) model.get("feedContent");
-        for (Article content : listContent) {
+        List<AbstractPost> listContent = (List<AbstractPost>) model.get("feedContent");
+        for (AbstractPost content : listContent) {
             Date date = content.getDisplayDate();
             if (feed.getUpdated() == null || date.compareTo(feed.getUpdated()) > 0) {
                 feed.setUpdated(date);
@@ -34,10 +33,10 @@ public class CustomAtomViewer {}
                                            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         @SuppressWarnings("unchecked")
-        List<Article> contentList = (List<Article>) model.get("feedContent");
+        List<AbstractPost> contentList = (List<AbstractPost>) model.get("feedContent");
         List<Entry> entries = new ArrayList<>(contentList.size());
 
-        for (Article content : contentList) {
+        for (AbstractPost content : contentList) {
             Entry entry = new Entry();
 
             entry.setId("http://namsterdam.us/article/" + content.getUrlTitle());
@@ -59,4 +58,4 @@ public class CustomAtomViewer {}
         return entries;
 
     }
-}*/
+}
