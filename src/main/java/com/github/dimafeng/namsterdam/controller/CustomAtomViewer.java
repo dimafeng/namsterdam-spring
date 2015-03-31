@@ -1,7 +1,6 @@
 package com.github.dimafeng.namsterdam.controller;
 
 import com.github.dimafeng.namsterdam.model.AbstractPost;
-import com.github.dimafeng.namsterdam.model.Article;
 import com.rometools.rome.feed.atom.Content;
 import com.rometools.rome.feed.atom.Entry;
 import com.rometools.rome.feed.atom.Feed;
