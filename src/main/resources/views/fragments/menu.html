@@ -1,8 +1,11 @@
 <div class="container">
     <div class="navbar-header">
-        <a href="/"><img style="width: 400px;" src="{{staticPath}}/images/logo.png"/></a>
+        <a href="/">
+            <img style="width: 300px;" src="{{staticPath}}/images/logo.png"/>
+            <div class="logo-desc">Блоги о жизни в США</div>
+        </a>
     </div>
-    <div class="navbar-collapse collapse" style="margin-top: 60px;">
+    <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
             {% for m in menus %}
             {% if m.url == selectedMenu %}
