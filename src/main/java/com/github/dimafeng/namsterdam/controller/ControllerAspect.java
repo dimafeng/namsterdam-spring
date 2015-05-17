@@ -25,7 +25,7 @@ public class ControllerAspect {
     @Value("${devmode:false}")
     private boolean devMode;
 
-    @Value("${static.path}")
+    @Value("${static.path:}")
     private String staticPath;
 
     @Autowired

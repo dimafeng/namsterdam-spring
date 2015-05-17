@@ -28,7 +28,7 @@ import java.util.List;
 @Secured("ROLE_ADMIN")
 public class AdminController {
 
-    @Value("${mongo.db.name}")
+    @Value("${mongo.db.name:namsterdam}")
     private String databaseName;
 
     @Value("${mongo.db.server}")

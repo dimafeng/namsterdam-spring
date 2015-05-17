@@ -24,7 +24,7 @@ import org.tautua.markdownpapers.Markdown;
 //@EnableAspectJAutoProxy(proxyTargetClass = false)
 public class AppConfig extends AbstractMongoConfiguration {
 
-    @Value("${mongo.db.name}")
+    @Value("${mongo.db.name:namsterdam}")
     private String databaseName;
 
     @Value("${mongo.db.server}")
