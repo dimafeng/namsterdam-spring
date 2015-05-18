@@ -10,6 +10,8 @@ public class PropertiesConfig {
     @Bean
     PropertyPlaceholderConfigurer PropertyConfigurer() {
         PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
+        configurer.setIgnoreResourceNotFound(true);
+        configurer.setIgnoreUnresolvablePlaceholders(true);
         configurer.setLocation(new FileSystemResource(System.getProperty("user.home") + "/namsterdam.properties"));
         return configurer;
     }
