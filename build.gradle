@@ -24,6 +24,10 @@ mainClassName = "com.github.dimafeng.namsterdam.Application"
 
 compileJava.options.encoding = 'UTF-8'
 
+run {
+    systemProperties = System.getProperties()
+}
+
 repositories {
     mavenCentral()
 }
