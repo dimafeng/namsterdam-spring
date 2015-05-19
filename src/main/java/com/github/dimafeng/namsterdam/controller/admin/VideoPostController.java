@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/videos")
-public class VideoPostController implements CRUDMapping<AbstractPost, VideoPost> {
+public class VideoPostController extends CRUDMapping<AbstractPost,VideoPost> {
 
     @Autowired
     private AbstractPostRepository abstractPostRepository;

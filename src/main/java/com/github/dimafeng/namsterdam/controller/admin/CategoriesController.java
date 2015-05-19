@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/categories")
-public class CategoriesController implements CRUDMapping<Category, Category> {
+public class CategoriesController extends CRUDMapping<Category,Category> {
 
     @Autowired
     private CategoryRepository repository;

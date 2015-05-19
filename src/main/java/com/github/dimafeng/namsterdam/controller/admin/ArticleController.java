@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/articles")
-public class ArticleController implements CRUDMapping<AbstractPost, Article> {
+public class ArticleController extends CRUDMapping<AbstractPost,Article> {
 
     @Autowired
     private AbstractPostRepository abstractPostRepository;
