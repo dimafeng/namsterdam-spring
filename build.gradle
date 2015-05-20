@@ -52,11 +52,11 @@ dependencies {
     compile('org.springframework.data:spring-data-mongodb:1.6.1.RELEASE') {
         exclude group: 'org.mongodb', module: 'mongo-java-driver'
     }
-    compile('org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE') {
+    compile('org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE') {
         //exclude group: 'ch.qos.logback'
         exclude module : 'spring-boot-starter-logging'
     }
-    compile('org.springframework.boot:spring-boot-starter-security:1.2.1.RELEASE') {
+    compile('org.springframework.boot:spring-boot-starter-security:1.2.3.RELEASE') {
         //exclude group: 'ch.qos.logback'
         exclude module : 'spring-boot-starter-logging'
     }
