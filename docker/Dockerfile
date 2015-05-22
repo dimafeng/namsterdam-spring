@@ -9,7 +9,5 @@ WORKDIR namsterdam-spring
 RUN chmod +x ./gradlew
 RUN ./gradlew compileJava
 
-RUN echo $MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT
-
 EXPOSE 8080
-CMD ["./gradlew", "-Dmongo.db.server=$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT", "run"]
+CMD ["./gradlew", "-Dmongo.db.server=${MONGO_PORT_27017_TCP_ADDR}:${MONGO_PORT_27017_TCP_PORT}", "run"]
