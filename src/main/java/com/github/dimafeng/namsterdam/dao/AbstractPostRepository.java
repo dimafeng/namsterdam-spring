@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface AbstractPostRepository extends MongoRepository<AbstractPost, String> {
 
     AbstractPost findByUrlTitle(String urlTitle);
