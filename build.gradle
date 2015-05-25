@@ -6,9 +6,11 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE"
         classpath 'org.springframework:springloaded:1.2.0.RELEASE'
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
     }
 }
 
+apply plugin: 'eu.appsatori.fatjar'
 apply plugin: 'idea'
 
 idea {
@@ -30,6 +32,19 @@ run {
 
 repositories {
     mavenCentral()
+}
+
+fatJarPrepareFiles {
+    include 'META-INF/spring.handlers'
+    include 'META-INF/spring.schemas'
+}
+
+fatJar {
+    manifest {
+        attributes 'Implementation-Title': rootProject.name,
+                'Implementation-Version': version,
+                'Main-Class': 'com.github.dimafeng.namsterdam.Application'
+    }
 }
 
 dependencies {
