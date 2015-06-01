@@ -1,7 +1,7 @@
 FROM java:8
 
 RUN apt-get update
-RUN apt-get install -y git
+RUN apt-get install -y git imagemagick
 RUN git clone https://github.com/dimafeng/namsterdam-spring.git
 
 WORKDIR namsterdam-spring
