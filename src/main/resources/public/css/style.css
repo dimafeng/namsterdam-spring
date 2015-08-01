@@ -103,6 +103,12 @@ body {
 .article-full-content > img{
     width:100%;
 }
+.col-md-12 > p {
+    width:80%;
+    margin:auto 0;
+
+}
+
 time.icon {
     font-size: 1em; /* change icon size */
     display: block;
