@@ -100,7 +100,9 @@ body {
 .footer-copy a:hover {
     text-decoration: underline;
 }
-
+.article-full-content > img{
+    width:100%;
+}
 time.icon {
     font-size: 1em; /* change icon size */
     display: block;
