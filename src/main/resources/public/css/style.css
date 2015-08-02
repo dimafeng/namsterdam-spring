@@ -121,6 +121,14 @@ time.icon {
     overflow: hidden;
 }
 
+blockquote {
+    width: 100%;
+    background-color: #f9f9f9;
+
+    font-size:40px;
+
+}
+
 time.icon * {
     display: block;
     width: 100%;
