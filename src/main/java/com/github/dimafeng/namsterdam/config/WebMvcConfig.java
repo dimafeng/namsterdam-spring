@@ -26,7 +26,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public ViewResolver viewResolver() {
         JtwigViewResolver viewResolver = new JtwigViewResolver();
         viewResolver.setEncoding("UTF8");
-        viewResolver.setPrefix("classpath:/views/");
+        viewResolver.setPrefix("classpath:views/");
         viewResolver.setSuffix(".html");
         viewResolver.setOrder(1);
         viewResolver.setCached(cacheViews);
