@@ -15,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +81,14 @@ public class IndexController {
     public String showArticle(@PathVariable("articleName") String articleName, Model model) {
 
         AbstractPost articlePage = abstractPostRepository.findByUrlTitle(articleName);
+
+        if(!articlePage.isDisplay() &&
+                !SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                        .contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+        {
+            throw new IllegalStateException();
+        }
+
         if (articlePage instanceof Article) {
             model.addAttribute("article", articlePage);
 
