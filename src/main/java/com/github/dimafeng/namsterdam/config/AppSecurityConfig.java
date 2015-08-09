@@ -33,7 +33,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .formLogin()
+                .loginPage("/login");
+        ;
 
     }
 

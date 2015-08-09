@@ -176,4 +176,10 @@ public class IndexController {
     public String error404() {
         return "errors/404";
     }
+
+    @RequestMapping(value = "/login")
+    public String login()
+    {
+        return "login";
+    }
 }

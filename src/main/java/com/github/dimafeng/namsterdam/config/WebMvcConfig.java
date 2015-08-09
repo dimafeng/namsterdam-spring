@@ -2,6 +2,7 @@ package com.github.dimafeng.namsterdam.config;
 
 import com.github.dimafeng.namsterdam.controller.CustomAtomViewer;
 import com.lyncode.jtwig.mvc.JtwigViewResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,10 @@ import org.springframework.web.servlet.view.BeanNameViewResolver;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+
+    @Value("${view.cache:true}")
+    private boolean cacheViews;
+
     @Bean
     public ViewResolver viewResolver() {
         JtwigViewResolver viewResolver = new JtwigViewResolver();
@@ -24,6 +29,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         viewResolver.setPrefix("classpath:/views/");
         viewResolver.setSuffix(".html");
         viewResolver.setOrder(1);
+        viewResolver.setCached(cacheViews);
         return viewResolver;
     }
 
