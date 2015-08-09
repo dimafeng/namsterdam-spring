@@ -51,6 +51,8 @@ public class MarkdownService {
                             .append(".jpg\" alt=\"\" /></a>");
                 });
                 sb.append("</div>");
+                sb.append("<div class=\"article-slider-nav\">");
+                sb.append("</div>");
             } else {
                 sb.append("<img class=\"article-image\" src=\"/images/1000/").append(images).append(".jpg\">");
             }
