@@ -130,6 +130,12 @@ public abstract class AbstractPost implements Model {
     public abstract boolean isHasGridImage();
 
     @JsonIgnore
+    public boolean isVideo()
+    {
+        return this instanceof VideoPost;
+    }
+
+    @JsonIgnore
     public boolean isShouldHaveBackgroudOnGrid() {
         return false;
     }

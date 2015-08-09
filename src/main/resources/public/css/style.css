@@ -343,3 +343,9 @@ a {
 a:hover {
     text-decoration: none;
 }
+
+.play-icon {
+    position: absolute;
+    top: 30px;
+    width: 50px;
+}

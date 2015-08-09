@@ -28,6 +28,9 @@
     <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'">
 
         {% if(a.hasGridImage) %}
+        {% if(a.video) %}
+            <img class="play-icon" src="/images/play_icon.png">
+        {% endif %}
         <div>
             <img style=" width: 100%;" src="{{a.gridImageUrl}}">
         </div>
