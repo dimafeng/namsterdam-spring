@@ -95,43 +95,50 @@ position: relative;">
     $(function () {
 
         $(".article-map").append('<div class="article-map-wrapper" style="z-index: 100; width: 100%; height: 500px;"></div>');
+        var i;
+        $(".carousel-controls").prepend('<span class="glyphicon glyphicon-chevron-left" type="button" aria-hidden="true"></span><span class="sr-only">Previous</span>');
+        $(".carousel-controls").append('<span class="glyphicon glyphicon-chevron-right" type="button" aria-hidden="true"></span><span class="sr-only">Next</span>');
 
+        console.log($('.carousel').length);
+        for (i=0;i< $('.carousel').length;i++){
+            $('.carousel').eq(i).attr('id', 'carousel' + i);
+            $('.carousel-index').eq(i).attr('id', 'carousel' + i);
 
-        var i=1;
+            $('#carousel'+i).append('1  /  '+$('#carousel'+i+' img').length);
+            $(".glyphicon-chevron-left").eq(i).attr('id', 'carousel' + i);
+            $(".glyphicon-chevron-right").eq(i).attr('id', 'carousel' + i);
 
-        var nextSlidebefore;
-        var slider = new IdealImageSlider.Slider({
-            height: 400,
+        }
 
-            selector: '.article-slider',
-
-            onStart: function () {
-                console.log(slider);
-                $(".article-slider-nav").html('<div style="text-align: center;">' + 1 + '/' + slider.get('slides').length + '</div>');
-            },
-           beforeChange: function(){
-            nextSlidebefore = slider.get('nextSlide');
-
-        },
-            afterChange: function () {
-
-             if (slider.get('currentSlide')==nextSlidebefore){
-                 i++;
-             }
-                else{
-                 i--;
-             }
-                if (i>slider.get('slides').length){
-                    i=1;
-                }
-                if (i<1){
-                    i=slider.get('slides').length;
-                }
-
-                $(".article-slider-nav").html('<div style="text-align: center;">' + i + '/' + slider.get('slides').length + '</div>');
-            }
+         console.log($("#carousel0 img").length);
+        $(".glyphicon-chevron-left").click(function(event){
+            console.log(event.target.id);
+            $('div#'+event.target.id+'.carousel').carousel('prev');
         });
-        slider.start();
+        $(".glyphicon-chevron-right").click(function(event){
+            console.log(event.target.id);
+            $('div#'+event.target.id+'.carousel').carousel('next');
+        });
+        var total
+
+        function indexCarousel (event) {
+            var carouselData = $(event.delegateTarget).data('bs.carousel');
+
+            var currentIndex = carouselData.getActiveIndex();
+             total = carouselData.$items.length;
+
+            // Now display this wherever you want
+            var text =(currentIndex + 1) + " / " + total;
+
+            $('div#'+event.delegateTarget.id+'.carousel-index').html(text);
+
+        }
+
+
+        $('.carousel').on('slid.bs.carousel',indexCarousel
+        );
+
+
 
         var innerWidth = $('.article').innerWidth() - 20;
         $('.youtube-video').css({width: innerWidth + 'px', height: (innerWidth * 9 / 16) + 'px'});

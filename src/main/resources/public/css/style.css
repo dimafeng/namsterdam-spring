@@ -26,6 +26,7 @@ pointer-events:none;
 }
 
 
+
 .big-image {
     background-image: url('/images/main-bg.jpg');
     min-height: 600px;
@@ -53,7 +54,11 @@ pointer-events:none;
 .navbar {
     margin-bottom: 0px;
 }
-
+.carousel-controls{
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top:20px;
+}
 .content {
     line-height: 35px;
     font-size: 19px;
@@ -61,18 +66,6 @@ pointer-events:none;
     margin-top: 20px;
     border-radius: 25px;
     padding: 30px 25px 25px 35px;
-}.article-full-content > img{
-    width:100%;
-}
-article p{
-    width:80%;
-    margin:auto 0;
-
-}
-
-
-a {
-    color: #444;
 }
 
 .content-white-area {
@@ -166,7 +159,26 @@ time.icon span {
     padding-top: 40px;
     color: #2f2f2f;
 }
+.glyphicon-chevron-left
+{
+padding-right:25px;
 
+}
+.glyphicon-chevron-right
+{
+    padding-left:25px;
+
+
+}
+.carousel-index{
+    display:inline;
+    padding-bottom: 20px;
+    text-align:center;
+    font-size: 30px;
+}
+.item > img {
+    width:100%;
+}
 .footer-menu {
     padding-top: 50px;
 }
@@ -229,9 +241,14 @@ time.icon span {
     color: #666;
     font-weight: bold;
 }
+.article p {
+ width: 85%;
+ margin:auto;
+    padding-top:40px;
+}
+
 
 .article-full-content {
-    padding: 20px;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
