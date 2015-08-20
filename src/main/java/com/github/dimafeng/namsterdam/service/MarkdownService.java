@@ -42,15 +42,30 @@ public class MarkdownService {
 
             if (images.contains(",")) {
                 List<String> imagesList = Arrays.asList(images.split(","));
-                sb.append("<div class=\"article-slider\">");
+                sb.append("<div class=\"carousel-controls\" data-ride=\"carousel\">");
+                sb.append("<div class=\"carousel-index\" data-ride=\"carousel\"></div>");
+                sb.append("</div>");
+                sb.append("<div class=\"carousel slide\" data-ride=\"carousel\">");
+                sb.append("<div class=\"carousel-inner\" role=\"listbox\">");
                 imagesList.stream().forEach(e -> {
-                    sb.append("<a href=\"/images/1000/")
+                    if (e== imagesList.get(0)){
+                    sb.append("<div class=\"item active\">");}
+                    else{
+                        sb.append("<div class=\"item\">");
+                    }
+                    //sb.append("<a href=\"/images/1000/")
+                    //        .append(e)
+                           sb.append("<img src=\"/images/300/")
                             .append(e)
-                            .append(".jpg\"><img src=\"/images/300/")
-                            .append(e)
-                            .append(".jpg\" alt=\"\" /></a>");
+                            .append(".jpg\" alt=\"\" />");
+                    sb.append("</div>");
                 });
                 sb.append("</div>");
+
+
+                  sb.append("</div>");
+
+
             } else {
                 sb.append("<img class=\"article-image\" src=\"/images/1000/").append(images).append(".jpg\">");
             }
