@@ -19,104 +19,106 @@
     </div>
 </div>-->
 {% endblock %}
-        
+
 {% block content %}
-<section id="demo" style="position: relative">
-    {% for a in articles %}
+<div class="content-with-padding">
+    <section id="demo" style="position: relative">
+        {% for a in articles %}
 
-    {% if (a.shouldHaveBackgroudOnGrid == false) %}
-    <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'">
+        {% if (a.shouldHaveBackgroudOnGrid == false) %}
+        <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'">
 
-        {% if(a.hasGridImage) %}
-        {% if(a.video) %}
+            {% if(a.hasGridImage) %}
+            {% if(a.video) %}
             <img class="play-icon" src="/images/play_icon.png">
+            {% endif %}
+            <div>
+                <img style=" width: 100%;" src="{{a.gridImageUrl}}">
+            </div>
+            {% endif %}
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 full-name">
+                        {{a.user.fullName}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="/article/{{a.urlTitle}}"><h1>{{ a.title }}</h1></a>
+                        <!--{{ a.smallText }}-->
+                    </div>
+                </div>
+                <div class="row comments-and-date">
+                    <div class="col-md-7">
+                        <span class="glyphicon glyphicon-comment" style="margin-right: 3px;"></span><a
+                            href="/article/{{a.urlTitle}}#disqus_thread"></a>
+
+                    </div>
+                    <div class="col-md-5">
+                        <span class="glyphicon glyphicon-calendar" style="margin-right: 3px;"></span>{{a.displayDate |
+                        date("dd.MM.yyyy") }}
+                    </div>
+                </div>
+            </div>
+        </article>
         {% endif %}
-        <div>
-            <img style=" width: 100%;" src="{{a.gridImageUrl}}">
-        </div>
-        {% endif %}
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 full-name">
-                    {{a.user.fullName}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="/article/{{a.urlTitle}}"><h1>{{ a.title }}</h1></a>
-                    <!--{{ a.smallText }}-->
-                </div>
-            </div>
-            <div class="row comments-and-date">
-                <div class="col-md-7">
-                    <span class="glyphicon glyphicon-comment" style="margin-right: 3px;"></span><a
-                        href="/article/{{a.urlTitle}}#disqus_thread"></a>
-
-                </div>
-                <div class="col-md-5">
-                    <span class="glyphicon glyphicon-calendar" style="margin-right: 3px;"></span>{{a.displayDate |
-                    date("dd.MM.yyyy") }}
-                </div>
-            </div>
-        </div>
-    </article>
-    {% endif %}
-
-    {% if (a.shouldHaveBackgroudOnGrid) %}
-    <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'"
-             style="background-image: url('{{a.gridImageUrl}}');
+        {% if (a.shouldHaveBackgroudOnGrid) %}
+        <article class="white-panel" onclick="window.location.href = '/article/{{a.urlTitle}}'"
+                 style="background-image: url('{{a.gridImageUrl}}');
             height: {{260*a.gridImageHeight/a.gridImageWidth}}px;">
 
-        <div style="height: {{260*a.gridImageHeight/a.gridImageWidth}}px;position:relative;" class="filled">
-            <div style="position: absolute; bottom: 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 full-name">
-                            {{a.user.fullName}}
+            <div style="height: {{260*a.gridImageHeight/a.gridImageWidth}}px;position:relative;" class="filled">
+                <div style="position: absolute; bottom: 0;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 full-name">
+                                {{a.user.fullName}}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="/article/{{a.urlTitle}}"><h1>{{ a.title }}</h1></a>
-                            <!--{{ a.smallText }}-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/article/{{a.urlTitle}}"><h1>{{ a.title }}</h1></a>
+                                <!--{{ a.smallText }}-->
+                            </div>
                         </div>
-                    </div>
-                    <div class="row comments-and-date">
-                        <div class="col-md-7">
-                            <span class="glyphicon glyphicon-comment" style="margin-right: 3px;"></span><a
-                                href="/article/{{a.urlTitle}}#disqus_thread"></a>
+                        <div class="row comments-and-date">
+                            <div class="col-md-7">
+                                <span class="glyphicon glyphicon-comment" style="margin-right: 3px;"></span><a
+                                    href="/article/{{a.urlTitle}}#disqus_thread"></a>
 
-                        </div>
-                        <div class="col-md-5">
-                            <span class="glyphicon glyphicon-calendar" style="margin-right: 3px;"></span>{{a.displayDate
-                            |
-                            date("dd.MM.yyyy") }}
+                            </div>
+                            <div class="col-md-5">
+                                <span class="glyphicon glyphicon-calendar" style="margin-right: 3px;"></span>{{a.displayDate
+                                |
+                                date("dd.MM.yyyy") }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
-    {% endif %}
-    {% endfor %}
-</section>
-<div style="text-align:center;">
-    <div class="btn-group" role="group" aria-label="..." style="">
-        {% if (maxPage>0) %}
-
-        <a class="btn btn-default" {% if (page==0) %}disabled="disabled" {% endif %} align="center"
-           href="/?page={{previousPage}}"><</a>
-
-        {% for a in pageCount %}
-        <a class="btn btn-default {% if (a==page) %}active{% endif %}" align="center"
-           href="/?page={{a}}">{{a+1}}</a>
-        {% endfor %}
-
-        <a class="btn btn-default" {% if (page+1==maxPage) %}disabled="disabled" {% endif %} align="center"
-           href="/?page={{nextPage}}">></a>
-
+        </article>
         {% endif %}
+        {% endfor %}
+    </section>
+    <div style="text-align:center;">
+        <div class="btn-group" role="group" aria-label="..." style="">
+            {% if (maxPage>0) %}
+
+            <a class="btn btn-default" {% if (page==0) %}disabled="disabled" {% endif %} align="center"
+               href="/?page={{previousPage}}"><</a>
+
+            {% for a in pageCount %}
+            <a class="btn btn-default {% if (a==page) %}active{% endif %}" align="center"
+               href="/?page={{a}}">{{a+1}}</a>
+            {% endfor %}
+
+            <a class="btn btn-default" {% if (page+1==maxPage) %}disabled="disabled" {% endif %} align="center"
+               href="/?page={{nextPage}}">></a>
+
+            {% endif %}
+        </div>
     </div>
 </div>
 <script src="/js/vendor/pinterest_grid.js"></script>

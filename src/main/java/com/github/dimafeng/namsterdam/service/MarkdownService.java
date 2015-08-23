@@ -48,26 +48,22 @@ public class MarkdownService {
                 sb.append("<div class=\"carousel slide\" data-ride=\"carousel\">");
                 sb.append("<div class=\"carousel-inner\" role=\"listbox\">");
                 imagesList.stream().forEach(e -> {
-                    if (e== imagesList.get(0)){
-                    sb.append("<div class=\"item active\">");}
-                    else{
+                    if (e == imagesList.get(0)) {
+                        sb.append("<div class=\"item active\">");
+                    } else {
                         sb.append("<div class=\"item\">");
                     }
-                    //sb.append("<a href=\"/images/1000/")
-                    //        .append(e)
-                           sb.append("<img src=\"/images/300/")
+                    sb.append("<img src=\"/images/1000/")
                             .append(e)
                             .append(".jpg\" alt=\"\" />");
                     sb.append("</div>");
                 });
                 sb.append("</div>");
-
-
-                  sb.append("</div>");
+                sb.append("</div>");
 
 
             } else {
-                sb.append("<img class=\"article-image\" src=\"/images/1000/").append(images).append(".jpg\">");
+                sb.append("<div><img class=\"article-image\" src=\"/images/1000/").append(images).append(".jpg\"></div>");
             }
 
             result = result.replace(m.group(1), sb.toString());
