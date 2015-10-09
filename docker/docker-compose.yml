@@ -1,0 +1,19 @@
+mongo:
+  image: mongo:3.1.9
+  mem_limit: 200MB
+  volumes_from:
+    - data
+  restart: always
+data:
+  image: mongo:3.1.9
+  volumes:
+    - /data/db
+  command: --break-mongo
+app:
+  image: namsterdam
+  container_name: namsterdam
+  ports:
+    - "80:8080"
+  links:
+    - mongo:mongo
+  restart: always
