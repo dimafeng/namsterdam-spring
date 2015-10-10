@@ -17,6 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 @Service
@@ -28,6 +30,8 @@ public class ImageService {
     private ImageRepository imageRepository;
 
     private Path watermark;
+
+    private ExecutorService pool = Executors.newFixedThreadPool(1);
 
     @PostConstruct
     public void init() throws IOException {
@@ -53,7 +57,7 @@ public class ImageService {
         });
     }
 
-    public byte[] convert(byte[] image, boolean addWatermark, Consumer<IMOperation> operations) throws Exception {
+    public synchronized byte[] convert(byte[] image, boolean addWatermark, Consumer<IMOperation> operations) throws Exception {
 
         ByteArrayInputStream bais = new ByteArrayInputStream(image);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
