@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 
 @Service
 public class ImageService {
-    a
+
     static final Logger log = LoggerFactory.getLogger(ImageService.class);
 
     private Path tempDir;
