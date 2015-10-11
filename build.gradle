@@ -61,7 +61,6 @@ dependencies {
             'com.rometools:rome:1.5.0',
             'commons-fileupload:commons-fileupload:1.2.1',
             'commons-io:commons-io:2.4',
-            'org.im4java:im4java:1.4.0',
             'org.aspectj:aspectjtools:1.7.4',
     )
     compile('org.springframework.data:spring-data-mongodb:1.6.1.RELEASE') {

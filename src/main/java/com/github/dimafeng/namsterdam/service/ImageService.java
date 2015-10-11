@@ -2,11 +2,8 @@ package com.github.dimafeng.namsterdam.service;
 
 import com.github.dimafeng.namsterdam.dao.ImageRepository;
 import com.google.common.base.Preconditions;
-import org.im4java.core.CompositeCmd;
-import org.im4java.core.ConvertCmd;
-import org.im4java.core.IM4JavaException;
-import org.im4java.core.IMOperation;
-import org.im4java.process.Pipe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +11,18 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 @Service
 public class ImageService {
+    a
+    static final Logger log = LoggerFactory.getLogger(ImageService.class);
 
     private Path tempDir;
 
@@ -42,64 +42,65 @@ public class ImageService {
     }
 
     public byte[] gridImage(byte[] image, int size) throws Exception {
-        return convert(image, false, op -> {
-            op.brightnessContrast(-20., -40.);
-            op.resize(size);
-            //op.adaptiveBlur(10.5);
-        });
+        return convert(image, false, Optional.of(sb -> {
+            sb.append(" -brightness-contrast -20x-40 ");
+            sb.append(" -resize ").append(size).append(" ");
+            sb.append(" -adaptive-blur 10.5");
+        }));
     }
 
     public byte[] resize(byte[] image, int size) throws Exception {
-        return convert(image, size > 399, op -> {
-            op.sharpen(1.2);
-            op.resize(size);
-            op.quality(95.);
-        });
+        return convert(image, size > 399, Optional.of(sb -> {
+            sb.append(" -sharpen 1.2 ");
+            sb.append(" -resize ").append(size).append(" ");
+            sb.append(" -quality 95 ");
+        }));
     }
 
-    public synchronized byte[] convert(byte[] image, boolean addWatermark, Consumer<IMOperation> operations) throws Exception {
+    public synchronized byte[] convert(byte[] image, boolean addWatermark, Optional<Consumer<StringBuilder>> operations) throws Exception {
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(image);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        Pipe pipeIn = new Pipe(bais, null);
-        Pipe pipeOut = new Pipe(null, baos);
-
-        IMOperation op = new IMOperation();
-        op.addImage("-");
-        if (operations != null) {
-            operations.accept(op);
-        }
-        op.addImage("jpeg:-");
-
-        ConvertCmd cmd = new ConvertCmd();
-        cmd.setInputProvider(pipeIn);
-        cmd.setOutputConsumer(pipeOut);
-        cmd.run(op);
-
-        byte[] imageOutput = baos.toByteArray();
-        return addWatermark ? addWatermark(imageOutput) : imageOutput;
-    }
-
-    private byte[] addWatermark(byte[] image) throws Exception {
-        Path tempFileWithImage = Files.createTempFile("image", "");
-        Files.write(tempFileWithImage, image);
-
-        Path output = Files.createTempFile("image", "");
+        File source = File.createTempFile("image_conversion_source", "");
+        File output = File.createTempFile("image_conversion_output", ".jpg");
 
         try {
-            IMOperation op = new IMOperation();
-            op.gravity("southeast");
-            op.addImage(getWatermarkPath());
-            op.addImage(tempFileWithImage.toAbsolutePath().toString());
-            op.addImage("jpeg:" + output.toAbsolutePath().toString());
-            CompositeCmd compositeCmd = new CompositeCmd();
-            compositeCmd.run(op);
+            com.google.common.io.Files.write(image, source);
 
-            return Files.readAllBytes(output);
+            Runtime rt = Runtime.getRuntime();
+            StringBuilder sb = new StringBuilder("convert ");
+            sb.append(source.getAbsolutePath());
+
+            operations.ifPresent(o -> o.accept(sb));
+            sb.append(" ").append(output.getAbsolutePath());
+
+            log.info(sb.toString());
+
+            Process pr = rt.exec(sb.toString());
+            pr.waitFor();
+
+            if (addWatermark) {
+                output = addWatermark(output);
+            }
+
+            return com.google.common.io.Files.toByteArray(output);
         } finally {
-            Files.deleteIfExists(tempFileWithImage);
-            Files.deleteIfExists(output);
+            source.delete();
+            output.delete();
+        }
+    }
+
+    private File addWatermark(File input) throws Exception {
+        File output = File.createTempFile("image_conversion_output", ".jpg");
+        try {
+            Runtime rt = Runtime.getRuntime();
+            StringBuilder sb = new StringBuilder("convert ");
+
+            Process pr = rt.exec("composite -gravity southeast " + getWatermarkPath()
+                    + " " + input.getAbsolutePath() + " " + output.getAbsolutePath());
+            pr.waitFor();
+
+            return output;
+        } finally {
+            input.delete();
         }
     }
 
@@ -112,7 +113,7 @@ public class ImageService {
     }
 
     public byte[] convertToJpgOriginalSize(byte[] image) throws Exception {
-        return convert(image, false, null);
+        return convert(image, false, Optional.<Consumer<StringBuilder>>empty());
     }
 
     public byte[] getImage(int size, String id, boolean gridImage) throws Exception {
